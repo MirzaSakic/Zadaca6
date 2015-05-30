@@ -12,7 +12,7 @@ Baza podataka treba u pozadini da ima implementiranu strukturu za čuvanje podat
 
 ## Implementacija baze podataka
 Nakon analize problema baza podataka treba da izgleda kao što je to prikazano na sljedećoj slici.
-<a href='http://postimage.org/' target='_blank'><img src='http://s21.postimg.org/688t5ynk7/Baza_Podataka_Movies.png' border='0' alt="Baza Podataka Movies" /></a><br /><a target='_blank' href='http://postimage.org/'>imagur</a><br /><br />
+<a href='http://postimage.org/' target='_blank'><img src='http://s21.postimg.org/688t5ynk7/Baza_Podataka_Movies.png' border='0' alt="Baza Podataka Movies" /></a><br /><br />
 Vidimo da su zbog zahtjeva sve tabele povezane vezama m:n što znači da smo između tabela morali dodati nove tabele koje će voditi računa o povezivanju i historiji podizanja filmova. Svaka kolona tabele čiji je romb označen plavom bojom znači da je ta kolona neophodna pri dodavanju novog sloga u bazu podataka, ukoliko je označen bijelom bojom, znači da je neobavezno. Ključ označava identifikacioni broj odnosno indeks tabele, te je potrebno primjetiti da međutabele imaju dva identifikaciona broja.
 
 
