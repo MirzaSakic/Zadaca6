@@ -1,4 +1,4 @@
-#include "actor.h"
+#include "../include/actor.h"
 
 
 Actor::Actor(std::string firstName,std::string lastName,std::string Birthdate,std::string Birthplace){
