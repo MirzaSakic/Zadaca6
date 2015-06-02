@@ -6,16 +6,19 @@
 class User
 {
 	private: 
-		int _ID;
-		std::string _first_name;
-		std::string _last_name;
-		std::string _adress;
-		std::string _phone;
+		int _ID=0;
+		std::string _first_name="";
+		std::string _last_name="";
+		std::string _adress="";
+		std::string _phone="";
 		friend std::ostream& operator<<(std::ostream& out,const User& user);
 
 	public:
 		User() = default;
 		User(int ID,const std::string& first_name,const std::string& last_name, 
+				const std::string& adress,const std::string& phone);
+		User(int ID);
+		User(const std::string& first_name,const std::string& last_name, 
 				const std::string& adress,const std::string& phone);
 				
 		int getID() const;
