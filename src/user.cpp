@@ -3,6 +3,12 @@
 User::User(int ID,const std::string& first_name,const std::string& last_name, 
 			const std::string& phone,const std::string& adress): 
             _ID(ID),_first_name(first_name),_last_name(last_name),_phone(phone), _adress(adress) {}
+
+User::User(int ID): _ID(ID) {}
+
+User::User(const std::string& first_name,const std::string& last_name, 
+			const std::string& phone,const std::string& adress): 
+            _first_name(first_name),_last_name(last_name),_phone(phone), _adress(adress) {}
             
 int User::getID() const {return _ID;}            
 std::string User::getFirstName() const {return _first_name;}
