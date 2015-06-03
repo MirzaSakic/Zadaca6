@@ -5,7 +5,7 @@
 
 class User
 {
-	private: 
+	private:
 		int _ID=0;
 		std::string _first_name="";
 		std::string _last_name="";
@@ -21,30 +21,30 @@ class User
 		User(const std::string& first_name,const std::string& last_name, 
 				const std::string& adress,const std::string& phone);
 				
-		int getID() const;
-		std::string getFirstName() const;
-		std::string getLastName() const;
-		std::string getAdress() const;
-		std::string getPhone() const;
+		const int& getID() const;
+		const std::string& getFirstName() const;
+		const std::string& getLastName() const;
+		const std::string& getAdress() const;
+		const std::string& getPhone() const;
 		
 		void setUser(int ID,const std::string& first_name, const std::string& last_name,
 						const std::string& adress,const std::string& phone);
 		void setID(int ID);
-		void setFirstName(std::string first_name);	
-		void setLastName(std::string last_name);
-		void setAdress(std::string adress);
-		void setPhone(std::string phone);
+		void setFirstName(const std::string& first_name);	
+		void setLastName(const std::string& last_name);
+		void setAdress(const std::string& adress);
+		void setPhone(const std::string& phone);
 		
-		bool operator<(User& other);
-		bool operator<=(User& other);
-		bool operator>(User& other);
-		bool operator>=(User& other);
-		bool operator==(User& other);
-		bool operator!=(User& other);
+		bool operator<(const User& other) const;
+		bool operator<=(const User& other) const;
+		bool operator>(const User& other) const;
+		bool operator>=(const User& other) const;
+		bool operator==(const User& other) const;
+		bool operator!=(const User& other) const;
 		
-		bool byName(User& other);
-		bool bySurname(User& other);
-		bool byNameAndSurname(User& other);
+		bool byName(const User& other) const;
+		bool bySurname(const User& other) const;
+		bool byNameAndSurname(const User& other) const;
 };
 
 

@@ -1,4 +1,4 @@
-#include "genre.h"
+#include "../include/genre.h"
 #include <iostream>
 
 Genre::Genre(const std::string& genName) : _genre_name(genName) {}
