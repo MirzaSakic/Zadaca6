@@ -6,12 +6,15 @@
 #include <stdexcept>
 #include <iostream>
 #include "vector.h"
+#include <functional>
 
 template<typename T>
 class BinaryTree
 {
+  using func = std::function<bool(const T&, const T&)>;
   public:
     BinaryTree() = default;
+    BinaryTree(func gT, func lT, func eq) : greaterThan(gT), lessThan(lT), equal(eq) {}
     BinaryTree(const Node<T>&);
     BinaryTree(const BinaryTree&);
     BinaryTree(BinaryTree&&);
@@ -24,25 +27,36 @@ class BinaryTree
       BinaryTree& push(U&&);
     bool find(const T&) const;
     bool remove(const T&);
-    T get(const T&) const;
+    const T& get(const T&) const;
+    T& get(const T&);
 
-    void inOrder() const;
+    void inOrder(std::ostream&) const;
     //void postOrder() const;
     //void preOrder() const;
     void printBST() const;
     void BalanceTree();
     void BalanceTree(sp::vector<T>&);
+    void setGreaterThan(func gT) { greaterThan = gT; }
+    void setLessThan(func lT) { lessThan = lT; }
+    void setEqual(func eq) { equal = eq; }
+    template<typename U>
+    void TreeToVectorPointers(sp::vector<U>&) const;
 
   private:
     Node<T>* root=nullptr;
     void createTree(Node<T>*, Node<T>*);
-    void print_inOrder(Node<T>*) const;
+    void print_inOrder(Node<T>*, std::ostream&) const;
     bool findWrapper(const T&, Node<T>*) const;
     bool removeWrapper(const T&, Node<T>*);
     void elementFound(Node<T>*, Node<T>*, bool);
     void printBSTWrapper(Node<T>*) const;
     void FillVectorWithElements(sp::vector<T>&, Node<T>*) const;
+    template<typename U>
+    void FillVectorWithPointers(sp::vector<U>&, Node<T>*) const;
     void CreateTreeFromVector(sp::vector<T>&, int, int);
+    func greaterThan = [](const T& first, const T& second) { return first>second; };
+    func lessThan = [](const T& first, const T& second) { return first<second; };
+    func equal = [](const T& first, const T& second) { return first == second; };
 };
 
 template<typename T>
@@ -147,7 +161,7 @@ BinaryTree<T>& BinaryTree<T>::push(U&& info)
     Node<T> *temp = root;
     while(1)
     {
-      if(temp->info > info)
+      if(greaterThan(temp->info,info))
       {
         if(temp->llink != nullptr)
           temp = temp->llink;
@@ -157,7 +171,7 @@ BinaryTree<T>& BinaryTree<T>::push(U&& info)
           break;
         }
       }
-      else if(temp->info < info)
+      else if(lessThan(temp->info,info))
       {
         if(temp->rlink != nullptr)
           temp = temp->rlink;
@@ -185,23 +199,39 @@ bool BinaryTree<T>::findWrapper(const T& elem, Node<T>* node) const
 {
   if(node==nullptr)
     return false;
-  if(node->info == elem)
+  if(equal(node->info, elem))
     return true;
-  if(node->info > elem)
+  if(greaterThan(node->info, elem))
     return findWrapper(elem, node->llink);
   else
     return findWrapper(elem, node->rlink);
 }
 
 template<typename T>
-T BinaryTree<T>::get(const T& element) const
+const T& BinaryTree<T>::get(const T& element) const
 {
   Node<T>* temp = root;
   while(temp!=nullptr)
   {
-    if(temp->info == element)
+    if(equal(temp->info, element))
       return temp->info;
-    else if(temp->info > element)
+    else if(greaterThan(temp->info, element))
+      temp = temp -> llink;
+    else
+      temp = temp -> rlink;
+  }
+  throw std::invalid_argument("Element does not exist!");
+}
+
+template<typename T>
+T& BinaryTree<T>::get(const T& element)
+{
+  Node<T>* temp = root;
+  while(temp!=nullptr)
+  {
+    if(equal(temp->info, element))
+      return temp->info;
+    else if(greaterThan(temp->info, element))
       temp = temp -> llink;
     else
       temp = temp -> rlink;
@@ -214,7 +244,7 @@ bool BinaryTree<T>::remove(const T& elem)
 {
   if(root == nullptr)
     return false;
-  if(root->info==elem)
+  if(equal(root->info, elem))
   {
     if(root->llink == nullptr && root->rlink == nullptr)
     {
@@ -237,7 +267,7 @@ bool BinaryTree<T>::remove(const T& elem)
       elementFound(root, root, true);
     return true;
   }
-  else if(root->info > elem)
+  else if(greaterThan(root->info, elem))
     return removeWrapper(elem, root->llink);
   else return removeWrapper(elem, root->rlink);
 }
@@ -245,20 +275,20 @@ bool BinaryTree<T>::remove(const T& elem)
 template<typename T>
 bool BinaryTree<T>::removeWrapper(const T& elem, Node<T>* node)
 {
-  if(node->info > elem)
+  if(greaterThan(node->info, elem))
   {
     if(node->llink == nullptr) return false;
-    if(node->llink->info == elem)
+    if(equal(node->llink->info, elem))
     {
       elementFound(node, node->llink, true);
       return true;
     }
     else return removeWrapper(elem, node->llink);
   }
-  else if(node->info < elem)
+  else if(lessThan(node->info, elem))
   {
     if(node->rlink == nullptr) return false;
-    if(node->rlink->info==elem)
+    if(equal(node->rlink->info, elem))
     {
       elementFound(node, node->rlink, false);
       return true;
@@ -307,20 +337,19 @@ void BinaryTree<T>::elementFound(Node<T>* parent, Node<T>* element, bool left)
 }
 
 template<typename T>
-void BinaryTree<T>::inOrder() const
+void BinaryTree<T>::inOrder(std::ostream& out) const
 {
-  print_inOrder(root);
-  std::cout<<std::endl;
+  print_inOrder(root, out);
 }
 
 template<typename T>
-void BinaryTree<T>::print_inOrder(Node<T>* node) const
+void BinaryTree<T>::print_inOrder(Node<T>* node, std::ostream& out) const
 {
   if(node == nullptr)
     return;
-  print_inOrder(node->llink);
-  std::cout<<node->info<<' ';
-  print_inOrder(node->rlink);
+  print_inOrder(node->llink, out);
+  out<<node->info<<std::endl;
+  print_inOrder(node->rlink, out);
 }
 
 template<typename T>
@@ -385,6 +414,24 @@ void BinaryTree<T>::FillVectorWithElements(sp::vector<T>& vec, Node<T>* node) co
   FillVectorWithElements(vec, node->llink);
   vec.push(node->info);
   FillVectorWithElements(vec, node->rlink);
+}
+
+template<typename T>
+template<typename U>
+void BinaryTree<T>::TreeToVectorPointers(sp::vector<U>& vec) const
+{
+  FillVectorWithPointers(vec, root);
+}
+
+template<typename T>
+template<typename U>
+void BinaryTree<T>::FillVectorWithPointers(sp::vector<U>& vec, Node<T>* node) const
+{
+  if(node == nullptr)
+    return;
+  FillVectorWithPointers(vec, node->llink);
+  vec.push(&(node->info));
+  FillVectorWithPointers(vec, node->rlink);
 }
 
 template<typename T>
