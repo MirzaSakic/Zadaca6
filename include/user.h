@@ -5,7 +5,7 @@
 
 class User
 {
-	private: 
+	private:
 		int _ID=0;
 		std::string _first_name="";
 		std::string _last_name="";
