@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <algorithm>
+#include <initializer_list>
 
 namespace sp
 {
@@ -11,11 +12,15 @@ class vector
 {
   public:
     vector() = default;
+    vector(const std::initializer_list<T>&);
     vector(const vector<T>&);
     vector(vector<T>&&);
     vector<T>& operator=(const vector<T>&);
     vector<T>& operator=(vector<T>&&);
     ~vector();
+    class iterator;
+    iterator begin () const {return iterator(_array);}
+    iterator end() const {return iterator(_array + _size);}
 
     template<typename U>
       vector<T>& push(U&&);
@@ -29,6 +34,16 @@ class vector
     T *_array = new T[_cap];
     void reallocate();
 };
+
+template<typename T>
+vector<T>::vector(const std::initializer_list<T>& in_list)
+{
+  _size=in_list.size();
+  _cap=_size+10;
+  delete [] _array;
+  _array = new T [_cap];
+  std::copy(in_list.begin(),in_list.end(),_array);
+}
 
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector) : _cap(otherVector._cap), _size(otherVector._size)
@@ -104,5 +119,47 @@ void vector<T>::reallocate()
   delete [] _array;
   _array = newarray;
 }
+
+template<typename T>
+class vector<T>::iterator{
+  
+  private:
+    T* pointer;
+
+  public:
+    iterator(T* p) : pointer(p) {}
+
+    T& operator * () {return *pointer;}
+    
+    iterator& operator ++ ()
+    {
+      ++pointer;
+      return *this;
+    }
+
+    iterator&& operator ++ (int)
+    {
+      iterator temp=*this;
+      pointer++;
+      return std::move(temp);
+    }
+
+    iterator& operator -- ()
+    {
+      --pointer;
+      return *this;
+    }
+
+    iterator&& operator -- (int)
+    {
+      iterator temp = *this;
+      --pointer;
+      return std::move(temp);
+    }
+
+    bool operator == (const iterator& other) const {return (pointer == other.pointer);}
+    bool operator != (const iterator& other) const {return (pointer != other.pointer);}
+};
+
 }
 #endif
