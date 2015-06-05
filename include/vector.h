@@ -121,44 +121,83 @@ void vector<T>::reallocate()
 }
 
 template<typename T>
-class vector<T>::iterator{
+class vector<T>::iterator : public std::iterator<std::random_access_iterator_tag,T>{
   
-  private:
-    T* pointer;
-
   public:
-    iterator(T* p) : pointer(p) {}
+    T* pointer_el;
 
-    T& operator * () {return *pointer;}
+    //-----------------------------------------------------------
+    typedef std::random_access_iterator_tag iterator_categroy;
+    typedef T value_type;
+    typedef size_t difference_type;
+    typedef T* pointer;
+    typedef T& refernece;
+    //-----------------------------------------------------------
+
+    iterator(T* p) : pointer_el(p) {}
+
+    T& operator * () {return *pointer_el;}
     
     iterator& operator ++ ()
     {
-      ++pointer;
+      ++pointer_el;
       return *this;
     }
 
     iterator&& operator ++ (int)
     {
       iterator temp=*this;
-      pointer++;
+      pointer_el++;
       return std::move(temp);
     }
 
     iterator& operator -- ()
     {
-      --pointer;
+      --pointer_el;
       return *this;
     }
 
     iterator&& operator -- (int)
     {
       iterator temp = *this;
-      --pointer;
+      --pointer_el;
       return std::move(temp);
     }
 
-    bool operator == (const iterator& other) const {return (pointer == other.pointer);}
-    bool operator != (const iterator& other) const {return (pointer != other.pointer);}
+    iterator&& operator + (int a) const 
+    {
+      T* temp = this->pointer_el + a;
+      iterator it (temp);
+      return std::move(it);
+    }
+
+    iterator&& operator - (int a) const 
+    {
+      T* temp = this->pointer_el - a;
+      iterator it (temp);
+      return std::move(it);
+    }
+/*
+    iterator&& operator + (const iterator& other) const 
+    {
+      iterator temp = iterator (this->pointer_el + (other.pointer_el - other.front));
+      return std::move(temp);
+    }
+
+    iterator&& operator - (const iterator& other) const 
+    {
+      iterator temp = iterator (this->pointer_el - (other.pointer_el - ));
+      return std::move(temp);
+    }
+*/
+
+    bool operator == (const iterator& other) const {return (pointer_el == other.pointer_el);}
+    bool operator != (const iterator& other) const {return (pointer_el != other.pointer_el);}
+    bool operator >  (const iterator& other) const {return (pointer_el >  other.pointer_el);}
+    bool operator <  (const iterator& other) const {return (pointer_el <  other.pointer_el);}
+    bool operator <= (const iterator& other) const {return (pointer_el <= other.pointer_el);}
+    bool operator >= (const iterator& other) const {return (pointer_el >= other.pointer_el);}
+
 };
 
 }
