@@ -13,20 +13,19 @@ class Film {
   public:
     Film()=default;
     Film(int,const std::string&);
+    Film(const std::string&);
     
     Film(const Film&);
-    Film(Film&&);
     ~Film()=default;
     
     Film& operator = (const Film&) ;
-    Film& operator = (Film&&) ;
 
-    void setID (int);
-    void setReleaseYear (int);
-    void setTitle (const std::string&);
-    const int& getID () const;
-    const int& getReleaseYear () const;
-    const std::string& getTitle () const;
+    int& ID ();
+    int& release_year ();
+    std::string& title ();
+    const int& ID () const;
+    const int& release_year () const;
+    const std::string& title () const;
 
     bool operator ==(const Film&) const ;
     bool operator !=(const Film&) const ;
@@ -39,6 +38,7 @@ class Film {
     bool byTitle(const Film&) const;
 
     friend std::ostream& operator << (std::ostream&,const Film&);
+    friend std::istream& operator >> (std::istream&,Film&);
 };
 
 #endif 

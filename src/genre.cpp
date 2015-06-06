@@ -4,16 +4,14 @@
 Genre::Genre(const std::string& genName) : _genre_name(genName) {}
 
 Genre::Genre(const Genre& other) : _genre_name(other._genre_name) {}
-Genre::Genre(Genre&& other) : _genre_name(other._genre_name) {}
 
 Genre& Genre::operator = (const Genre& other) { _genre_name = other._genre_name; return *this;}
-Genre& Genre::operator = (Genre&& other) { _genre_name = other._genre_name; return *this;}
 
 
-void Genre::setID(int ID) {_ID = ID ;}
-void Genre::setGenreName(const std::string& genName) { _genre_name = genName;}
-const int& Genre::getID() const {return _ID;}
-const std::string& Genre::getGenreName() const {return _genre_name;}
+int& Genre::ID () {return _ID ;}
+std::string& Genre::genre_name () { return _genre_name;}
+const int& Genre::ID () const {return _ID;}
+const std::string& Genre::genre_name () const {return _genre_name;}
 
 
 bool Genre::operator == (const Genre& other) const {return (_genre_name == other._genre_name);}
@@ -26,7 +24,14 @@ bool Genre::operator >= (const Genre& other) const {return (_genre_name >= other
 
 std::ostream& operator << (std::ostream& out,const Genre& genre)
 {
-  out<<genre._genre_name;
+  out<<genre._ID<<","<<genre._genre_name<<std::endl;
   return out;
+}
+
+std::istream& operator >> (std::istream& in,Genre& genre)
+{
+  std::cout<<"Name of the genre: ";
+  in>>genre._genre_name;
+  return in ;
 }
 

@@ -14,15 +14,12 @@ class Genre {
     Genre(const std::string&);
 
     Genre(const Genre&);
-    Genre(Genre&&);
-
     Genre& operator = (const Genre&);
-    Genre& operator = (Genre&&);
 
-    void setID(int);
-    void setGenreName(const std::string&);
-    const int& getID() const;
-    const std::string& getGenreName() const;
+    int& ID();
+    std::string& genre_name();
+    const int& ID() const;
+    const std::string& genre_name() const;
 
     bool operator == (const Genre&) const;
     bool operator != (const Genre&) const;
@@ -32,6 +29,7 @@ class Genre {
     bool operator >= (const Genre&) const;
 
     friend std::ostream& operator << (std::ostream&,const Genre&);
+    friend std::istream& operator >> (std::istream&,Genre&);
 };
 
 #endif 
