@@ -16,22 +16,32 @@ class Actor {
 	
 	public:
 	Actor()=default;
-	Actor(std::string firstName,std::string lastName,std::string Birthdate,std::string Birthplace);
-	Actor(std::string firstName,std::string lastName);
+	Actor(const int& ID,const std::string& firstName,const std::string& lastName,const std::string& Birthdate,
+		const std::string& Birthplace);
+	Actor(const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace);
+	Actor(const std::string& firstName,const std::string& lastName);
+	Actor(int ID);
+	Actor(std::string& actor);
+
+	const int& getID() const;
+	const std::string& getFirstName() const;
+	const std::string& getLastName() const;
+	const std::string& getBirthDate() const;
+	const std::string& getBirthPlace() const;
 	
-	int getID() const;
-	std::string getFirstName() const;
-	std::string getLastName() const;
-	std::string getBirthDate() const;
-	std::string getBirthPlace() const;
-	
+	int& setID();
+	std::string&  setFirstName();
+	std::string&  setLastName();
+	std::string&  setBirthDate();
+	std::string&  setBirthPlace();	
+
 	void setID(int );
-	void setFirstName(std::string);
-	void setLastName(std::string);
-	void setBirthDate(std::string);
-	void setBirthPlace(std::string);
-	void setActor(std::string firstName,std::string lastName,std::string Birthdate,std::string Birthplace);
-	void setActor(std::string firstName,std::string lastName);
+	void setFirstName(const std::string&);
+	void setLastName(const std::string&);
+	void setBirthDate(const std::string&);
+	void setBirthPlace(const std::string&);
+	void setActor(const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace);
+	void setActor(const std::string& firstName,const std::string& lastName);
 	
 
 	bool operator<(const Actor& other) const;
