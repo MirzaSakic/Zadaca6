@@ -5,7 +5,7 @@
 
 class User
 {
-	private:
+	private: 
 		int _ID=0;
 		std::string _first_name="";
 		std::string _last_name="";
@@ -20,6 +20,7 @@ class User
 		User(int ID);
 		User(const std::string& first_name,const std::string& last_name, 
 				const std::string& adress,const std::string& phone);
+		User(std::string& user);
 				
 		const int& getID() const;
 		const std::string& getFirstName() const;
@@ -29,11 +30,11 @@ class User
 		
 		void setUser(int ID,const std::string& first_name, const std::string& last_name,
 						const std::string& adress,const std::string& phone);
-		void setID(int ID);
-		void setFirstName(const std::string& first_name);	
-		void setLastName(const std::string& last_name);
-		void setAdress(const std::string& adress);
-		void setPhone(const std::string& phone);
+		int& setID();
+		std::string& setFirstName();	
+		std::string& setLastName();
+		std::string& setAdress();
+		std::string& setPhone();
 		
 		bool operator<(const User& other) const;
 		bool operator<=(const User& other) const;
