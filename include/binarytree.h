@@ -39,6 +39,7 @@ class BinaryTree
     void setGreaterThan(func gT) { greaterThan = gT; }
     void setLessThan(func lT) { lessThan = lT; }
     void setEqual(func eq) { equal = eq; }
+    void SetVerbose(bool b) { verbose=b; }
     template<typename U>
     void TreeToVectorPointers(sp::vector<U>&) const;
 
@@ -54,9 +55,11 @@ class BinaryTree
     template<typename U>
     void FillVectorWithPointers(sp::vector<U>&, Node<T>*) const;
     void CreateTreeFromVector(sp::vector<T>&, int, int);
-    func greaterThan = [](const T& first, const T& second) { return first>second; };
-    func lessThan = [](const T& first, const T& second) { return first<second; };
-    func equal = [](const T& first, const T& second) { return first == second; };
+    func greaterThan = static_cast<func>([](const T& first, const T& second) { return first>second; });
+    func lessThan = static_cast<func>([](const T& first, const T& second) { return first<second; });
+    func equal = static_cast<func>([](const T& first, const T& second) { return first == second; });
+    bool verbose=false;
+    int count=0;
 };
 
 template<typename T>
@@ -191,12 +194,15 @@ BinaryTree<T>& BinaryTree<T>::push(U&& info)
 template<typename T>
 bool BinaryTree<T>::find(const T& elem) const
 {
+  //count=0;
   return findWrapper(elem, root);
+  //if(verbose) std::cout<<"Search took "<<count<<" steps!\n";
 }
 
 template<typename T>
 bool BinaryTree<T>::findWrapper(const T& elem, Node<T>* node) const
 {
+  //++count;
   if(node==nullptr)
     return false;
   if(equal(node->info, elem))
@@ -211,15 +217,21 @@ template<typename T>
 const T& BinaryTree<T>::get(const T& element) const
 {
   Node<T>* temp = root;
+  //count=0;
   while(temp!=nullptr)
   {
+    //++count;
     if(equal(temp->info, element))
+    {
+      //if(verbose) std::cout<<"Search took "<<count<<" steps\n";
       return temp->info;
+    }
     else if(greaterThan(temp->info, element))
       temp = temp -> llink;
     else
       temp = temp -> rlink;
   }
+  if(verbose) std::cout<<"Search took "<<count<<" steps\n";
   throw std::invalid_argument("Element does not exist!");
 }
 
@@ -227,15 +239,21 @@ template<typename T>
 T& BinaryTree<T>::get(const T& element)
 {
   Node<T>* temp = root;
+  count=0;
   while(temp!=nullptr)
   {
+    ++count;
     if(equal(temp->info, element))
+    {
+      if(verbose) std::cout<<"Search took "<<count<<" steps\n";
       return temp->info;
+    }
     else if(greaterThan(temp->info, element))
       temp = temp -> llink;
     else
       temp = temp -> rlink;
   }
+  if(verbose) std::cout<<"Search took "<<count<<" steps\n";
   throw std::invalid_argument("Element does not exist!");
 }
 
