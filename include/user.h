@@ -22,19 +22,19 @@ class User
 				const std::string& adress,const std::string& phone);
 		User(std::string& user);
 				
-		const int& getID() const;
-		const std::string& getFirstName() const;
-		const std::string& getLastName() const;
-		const std::string& getAdress() const;
-		const std::string& getPhone() const;
+		const int& ID() const;
+		const std::string& FirstName() const;
+		const std::string& LastName() const;
+		const std::string& Adress() const;
+		const std::string& Phone() const;
 		
 		void setUser(int ID,const std::string& first_name, const std::string& last_name,
 						const std::string& adress,const std::string& phone);
-		int& setID();
-		std::string& setFirstName();	
-		std::string& setLastName();
-		std::string& setAdress();
-		std::string& setPhone();
+		int& ID();
+		std::string& FirstName();	
+		std::string& LastName();
+		std::string& Adress();
+		std::string& Phone();
 		
 		bool operator<(const User& other) const;
 		bool operator<=(const User& other) const;
