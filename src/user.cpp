@@ -18,44 +18,44 @@ User::User(std::string& user) {
 	
 	while(user[i]!='\0'){
 		if(user[i]==',' && temporary==0){
-			int ID=stoi(user.substr(0,i));
-			setID()=ID;
+			int id=stoi(user.substr(0,i));
+			ID()=id;
 			user=user.substr(i+1);
 			i=-1;
 			++temporary;
 			}
 		if(user[i]==',' && temporary==1){
 			std::string name=user.substr(0,i);
-			setFirstName()=name;
+			FirstName()=name;
 			user=user.substr(i+1);
 			i=-1;
 			++temporary;
 			}
 		if(user[i]==',' && temporary==2){
 			std::string surname=user.substr(0,i);
-			setLastName()=surname;
+			LastName()=surname;
 			user=user.substr(i+1);
 			i=-1;
 			++temporary;
 			}
 		if(user[i]==',' && temporary==3){
 			std::string adress=user.substr(0,i);
-			setAdress()=adress;
+			Adress()=adress;
 			user=user.substr(i+1);
 			i=-1;
 			++temporary;
 			}
 	++i;
 		}
-	setPhone()=user;
+	Phone()=user;
 	
 	}
             
-const int& User::getID() const {return _ID;}             
-const std::string& User::getFirstName() const {return _first_name;}
-const std::string& User::getLastName() const {return _last_name;}
-const std::string& User::getAdress() const {return _adress;}
-const std::string& User::getPhone() const {return _phone;}
+const int& User::ID() const {return _ID;}             
+const std::string& User::FirstName() const {return _first_name;}
+const std::string& User::LastName() const {return _last_name;}
+const std::string& User::Adress() const {return _adress;}
+const std::string& User::Phone() const {return _phone;}
 
 void User::setUser(int ID,const std::string& first_name, const std::string& last_name,
 						const std::string& adress, const std::string& phone) 
@@ -67,11 +67,11 @@ void User::setUser(int ID,const std::string& first_name, const std::string& last
 	_phone=phone; 
 }
 
-int& User::setID() { return _ID; }
-std::string& User::setFirstName() { return _first_name;}
-std::string& User::setLastName() { return _last_name;}
-std::string& User::setAdress() { return _adress; }
-std::string& User::setPhone() { return _phone; }
+int& User::ID() { return _ID; }
+std::string& User::FirstName() { return _first_name;}
+std::string& User::LastName() { return _last_name;}
+std::string& User::Adress() { return _adress; }
+std::string& User::Phone() { return _phone; }
 
 bool User::operator<(const User& other)  const {return (_ID<other._ID);}
 bool User::operator<=(const User& other) const {return (_ID<=other._ID);}
