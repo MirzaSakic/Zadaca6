@@ -177,6 +177,29 @@ class vector<T>::iterator : public std::iterator<std::random_access_iterator_tag
       iterator it (temp);
       return std::move(it);
     }
+
+    iterator& operator += (int a)
+    {
+      this->pointer_el=this->pointer_el + a;
+      return *this;
+    }
+
+    iterator& operator -= (int a)
+    {
+      this->pointer_el=this->pointer_el - a;
+      return *this;
+    }
+
+    iterator&& operator + (const iterator& other) const 
+    {
+      return iterator(this->pointer_el + other.pointer_el);
+    }
+
+    iterator&& operator - (const iterator& other) const 
+    {
+      return iterator(this->pointer_el - other.pointer_el);
+    }
+
 /*
     iterator&& operator + (const iterator& other) const 
     {
