@@ -23,23 +23,19 @@ class Actor {
 	Actor(int ID);
 	Actor(std::string& actor);
 
-	const int& getID() const;
-	const std::string& getFirstName() const;
-	const std::string& getLastName() const;
-	const std::string& getBirthDate() const;
-	const std::string& getBirthPlace() const;
+	const int& ID() const;
+	const std::string& FirstName() const;
+	const std::string& LastName() const;
+	const std::string& BirthDate() const;
+	const std::string& BirthPlace() const;
 	
-	int& setID();
-	std::string&  setFirstName();
-	std::string&  setLastName();
-	std::string&  setBirthDate();
-	std::string&  setBirthPlace();	
+	int& ID();
+	std::string&  FirstName();
+	std::string&  LastName();
+	std::string&  BirthDate();
+	std::string&  BirthPlace();	
 
-	void setID(int );
-	void setFirstName(const std::string&);
-	void setLastName(const std::string&);
-	void setBirthDate(const std::string&);
-	void setBirthPlace(const std::string&);
+	
 	void setActor(const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace);
 	void setActor(const std::string& firstName,const std::string& lastName);
 	
