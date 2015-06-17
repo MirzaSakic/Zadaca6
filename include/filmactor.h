@@ -1,5 +1,5 @@
-#ifndef _FilmActor_H
-#define _FilmActor_H
+#ifndef _FILMACTOR_H
+#define _FILMACTOR_H
 
 #include<iostream>
 

@@ -1,17 +1,25 @@
 #include <iostream>
 #include "../include/film.h"
 
-Film::Film(int year,const std::string& title) : _release_year(year), _title(title) {}
+Film::Film(int ID,int year,const std::string& title) : _ID(ID), _release_year(year), _title(title) {}
+Film::Film(int ID) : _ID(ID) {};
 Film::Film(const std::string& film) 
 {
   size_t pos = 0;
-  std::string rel_year,title;
-  rel_year=film.substr(0,',');
+  std::string copy = film;
+  std::string id,rel_year,title;
+  
+  pos=copy.find(',');
+  id =copy.substr(0,pos);
+  _ID=stoi(id);
+  copy.erase(0,pos+1);
+
+  rel_year=copy.substr(0,',');
   int year = stoi(rel_year);
   _release_year=year;
 
-  pos=film.find(',') + 1;
-  title = film.substr(pos,std::string::npos);
+  pos=copy.find(',') + 1;
+  title = copy.substr(pos,std::string::npos);
   _title = title;
 }
 

@@ -203,13 +203,13 @@ class vector<T>::iterator : public std::iterator<std::random_access_iterator_tag
 /*
     iterator&& operator + (const iterator& other) const 
     {
-      iterator temp = iterator (this->pointer_el + (other.pointer_el - other.front));
+      iterator temp = iterator (this->pointer_el + (other.pointer_el - other._array));
       return std::move(temp);
     }
 
     iterator&& operator - (const iterator& other) const 
     {
-      iterator temp = iterator (this->pointer_el - (other.pointer_el - ));
+      iterator temp = iterator (this->pointer_el - (other.pointer_el - other._array));
       return std::move(temp);
     }
 */

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "FilmGenre.h"
+#include "../include/filmgenre.h"
 
 using namespace std;
 
@@ -24,6 +24,7 @@ FilmGenre& FilmGenre::operator = (const FilmGenre& other)
 {
   _IDFilm=other._IDFilm;
   _IDGenre=other._IDGenre;
+  return *this;
 }
 
 const int& FilmGenre::IDFilm() const {return _IDFilm;}

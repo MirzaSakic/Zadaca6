@@ -12,7 +12,8 @@ class Film {
 
   public:
     Film()=default;
-    Film(int,const std::string&);
+    Film(int,int,const std::string&);
+    Film(int);
     Film(const std::string&);
     
     Film(const Film&);

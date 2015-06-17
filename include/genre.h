@@ -11,6 +11,8 @@ class Genre {
 
   public:
     Genre() = default;
+    Genre(int,const std::string&);
+    Genre(int);
     Genre(const std::string&);
 
     Genre(const Genre&);

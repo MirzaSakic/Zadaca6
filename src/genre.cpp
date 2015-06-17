@@ -1,9 +1,22 @@
 #include "../include/genre.h"
 #include <iostream>
 
-Genre::Genre(const std::string& genName) : _genre_name(genName) {}
+Genre::Genre(int ID,const std::string& genName) : _ID(ID), _genre_name(genName) {}
+Genre::Genre(int ID) : _ID(ID) {}
+Genre::Genre(const std::string& gen) 
+{
+  size_t pos;
+  std::string id,genname;
 
-Genre::Genre(const Genre& other) : _genre_name(other._genre_name) {}
+  id=gen.substr(0,',');
+  _ID=stoi(id);
+  pos=gen.find(',') + 1;
+
+  genname=gen.substr(pos,std::string::npos);
+  _genre_name=genname;
+}
+
+Genre::Genre(const Genre& other) : _ID(other._ID), _genre_name(other._genre_name) {}
 
 Genre& Genre::operator = (const Genre& other) { _genre_name = other._genre_name; return *this;}
 
