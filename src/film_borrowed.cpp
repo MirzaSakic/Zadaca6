@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/film_borrowed.h"
+#include "film_borrowed.h"
 
 FilmBorrowed::FilmBorrowed(int IDUser,int IDFilm,const Date& date_of_borrowing):
 				_IDUser(IDUser), _IDFilm(IDFilm), _date_of_borrowing(date_of_borrowing) {}

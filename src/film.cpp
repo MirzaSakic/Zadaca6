@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/film.h"
+#include "film.h"
 
 Film::Film(int ID,int year,const std::string& title) : _ID(ID), _release_year(year), _title(title) {}
 Film::Film(int ID) : _ID(ID) {};

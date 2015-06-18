@@ -1,4 +1,4 @@
-#include "actor.h"
+#include "../include/actor.h"
 
 Actor::Actor(const int& ID,const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace){
 	_ID=ID;	
@@ -19,58 +19,34 @@ Actor::Actor(const std::string& firstName,const std::string& lastName){
 	_LastName=lastName;
 	
 	}
-Actor::Actor(int ID){ _ID=ID;}
+	
+int Actor::getID() const { return _ID; }
+const std::string& Actor::getFirstName() const { return _FirstName;}
+const std::string& Actor::getLastName() const { return _LastName;}
+const std::string& Actor::getBirthDate() const { return _BirthDate;}
+const std::string& Actor::getBirthPlace() const { return _BirthPlace;}
 
-Actor::Actor(std::string& actor){
-		int i=0;
-	
-	int temporary=0;
-	
-	while(actor[i]!='\0'){
-		if(actor[i]==',' && temporary==0){
-			ID()=stoi(actor.substr(0,i));
-			actor=actor.substr(i+1);
-			i=-1;
-			++temporary;
-			}
-		if(actor[i]==',' && temporary==1){
-			FirstName()=actor.substr(0,i);
-			actor=actor.substr(i+1);
-			i=-1;
-			++temporary;
-			}
-		if(actor[i]==',' && temporary==2){
-			LastName()=actor.substr(0,i);
-			actor=actor.substr(i+1);
-			i=-1;
-			++temporary;
-			}
-		if(actor[i]==',' && temporary==3){
-			BirthDate()=actor.substr(0,i);
-			actor=actor.substr(i+1);
-			i=-1;
-			++temporary;
-			}
-	++i;
-		}
-	BirthPlace()=actor;
-	
+int& Actor::setID() { _ID=ID; }
+std::string& Actor::setFirstName(){ _FirstName=fName; }
+std::string& Actor::setLastName(const std::string& lName){ _LastName=lName; }
+std::string& Actor::setBirthDate(const std::string& Bdate){ _BirthDate=Bdate; }
+std::string& Actor::setBirthPlace(const std::string& Bplace){_BirthPlace=Bplace;}
+
+void Actor::setID(int ID) {
+	_ID=ID;
 	}
-	
-	
-	
-const int& Actor::ID() const { return _ID; }
-const std::string& Actor::FirstName() const { return _FirstName;}
-const std::string& Actor::LastName() const { return _LastName;}
-const std::string& Actor::BirthDate() const { return _BirthDate;}
-const std::string& Actor::BirthPlace() const { return _BirthPlace;}
-
-int& Actor::ID() { return _ID;}
-std::string& Actor::FirstName(){ return _FirstName; }
-std::string& Actor::LastName(){ return _LastName; }
-std::string& Actor::BirthDate(){ return _BirthDate; }
-std::string& Actor::BirthPlace(){ return _BirthPlace;}
-
+void Actor::setFirstName(const std::string& fName){
+	_FirstName=fName;
+	}
+void Actor::setLastName(const std::string& lName){
+	_LastName=lName;
+	}
+void Actor::setBirthDate(const std::string& Bdate){
+	_BirthDate=Bdate;
+	}
+void Actor::setBirthPlace(const std::string& Bplace){
+	_BirthPlace=Bplace;
+	}
 
 void Actor::setActor(const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace){
 	_FirstName=firstName;
@@ -103,8 +79,8 @@ bool Actor::operator!=(const Actor& other) const{
 	return _ID!=other._ID;
 	}
 
-std::ostream& operator<<(std::ostream& out,Actor const& actor) {
-	if(out==std::cout)
+std::ostream& operator<<(std::ostream& out,const Actor& actor) {
+	if(out==cout)
 	out<<"First Name: "<<actor._FirstName<<"Last Name: "<<actor._LastName<<"Birth date: "<<actor._BirthDate<<"Birth place: "<<actor._BirthPlace<<std::endl;
 	else {
 	out<<actor._FirstName<<","<<actor._LastName<<","<<actor._BirthDate<<","<<actor._BirthPlace; }

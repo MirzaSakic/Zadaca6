@@ -1,4 +1,4 @@
-#include "../include/genre.h"
+#include "genre.h"
 #include <iostream>
 
 Genre::Genre(int ID,const std::string& genName) : _ID(ID), _genre_name(genName) {}

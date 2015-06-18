@@ -1,18 +1,18 @@
-#include "users.h"
+#include "actors.h"
 
 using std::string; using sp::vector;
 using std::cout; using std::endl;
 using std::invalid_argument;
 using std::move;
 
-void Users::AddIndexOnFirstName()
+void Actors::AddIndexOnFirstName()
 {
-  BinaryTree<usersindex> index;
-  vector<User*> vecp;
+  BinaryTree<actorsindex> index;
+  vector<Actor*> vecp;
   _data.TreeToVectorPointers(vecp);
   for(auto i=0;i<vecp.size();++i)
   {
-    usersindex indice;
+    actorsindex indice;
     indice.key = &(vecp[i]->FirstName());
     indice.pointers.push(vecp[i]);
     try
@@ -29,14 +29,14 @@ void Users::AddIndexOnFirstName()
   _IndexOnFirstName = _indexes.size() - 1;
 }
 
-void Users::AddIndexOnLastName()
+void Actors::AddIndexOnLastName()
 {
-  BinaryTree<usersindex> index;
-  vector<User*> vecp;
+  BinaryTree<actorsindex> index;
+  vector<Actor*> vecp;
   _data.TreeToVectorPointers(vecp);
   for(auto i=0;i<vecp.size();++i)
   {
-    usersindex indice;
+    actorsindex indice;
     indice.key = &(vecp[i]->LastName());
     indice.pointers.push(vecp[i]);
     try
@@ -53,15 +53,15 @@ void Users::AddIndexOnLastName()
   _IndexOnLastName = _indexes.size() - 1;
 }
 
-void Users::AddIndexOnAdress()
+void Actors::AddIndexOnBirthDate()
 {
-  BinaryTree<usersindex> index;
-  vector<User*> vecp;
+  BinaryTree<actorsindex> index;
+  vector<Actor*> vecp;
   _data.TreeToVectorPointers(vecp);
   for(auto i=0;i<vecp.size();++i)
   {
-    usersindex indice;
-    indice.key = &(vecp[i]->Adress());
+    actorsindex indice;
+    indice.key = &(vecp[i]->BirthDate());
     indice.pointers.push(vecp[i]);
     try
     {
@@ -74,17 +74,17 @@ void Users::AddIndexOnAdress()
   }
   index.BalanceTree();
   _indexes.push(std::move(index));
-  _IndexOnAdress = _indexes.size() - 1;
+  _IndexOnBirthDate = _indexes.size() - 1;
 }
 
-void Users::AddIndexOnTelephone()
+void Actors::AddIndexOnBirthPlace()
 {
-  BinaryTree<usersindex> index;
-  vector<User*> vecp;
+  BinaryTree<actorsindex> index;
+  vector<Actor*> vecp;
   _data.TreeToVectorPointers(vecp);
   for(auto i=0;i<vecp.size();++i)
   {
-    usersindex indice;
+    actorsindex indice;
     indice.key = &(vecp[i]->FirstName());
     indice.pointers.push(vecp[i]);
     try
@@ -98,25 +98,25 @@ void Users::AddIndexOnTelephone()
   }
   index.BalanceTree();
   _indexes.push(std::move(index));
-  _IndexOnTelephone = _indexes.size() - 1;
+  _IndexOnBirthPlace = _indexes.size() - 1;
 }
 
-User& Users::GetUser(int ID)
+Actor& Actors::GetActor(int ID)
 {
-  return getElement(User(ID));
+  return getElement(Actor(ID));
 }
 
-vector<User*> Users::GetUsersByFirstName(const string& name)
+vector<Actor*> Actors::GetActorsByFirstName(const string& name)
 {
-  User user(name, "","","");
-  vector<User*> res;
+  Actor actor(name, "","","");
+  vector<Actor*> res;
   if(_IndexOnFirstName==-1)
   {
-    vector<User*> vecp;
+    vector<Actor*> vecp;
     _data.TreeToVectorPointers(vecp);
     for(auto i=0;i<vecp.size();++i)
     {
-      if(vecp[i]->FirstName() == user.FirstName())
+      if(vecp[i]->FirstName() == actor.FirstName())
       {
         res.push(vecp[i]);
       }
@@ -125,7 +125,7 @@ vector<User*> Users::GetUsersByFirstName(const string& name)
   else
   {
     string nme = name;
-    usersindex indice;
+    actorsindex indice;
     indice.key = &nme;
     try
     {
@@ -144,17 +144,17 @@ vector<User*> Users::GetUsersByFirstName(const string& name)
   return res;
 }
 
-vector<User*> Users::GetUsersByLastName(const string& name)
+vector<Actor*> Actors::GetActorsByLastName(const string& name)
 {
-  User user("",name,"","");
-  vector<User*> res;
+  Actor actor("",name,"","");
+  vector<Actor*> res;
   if(_IndexOnLastName==-1)
   {
-    vector<User*> vecp;
+    vector<Actor*> vecp;
     _data.TreeToVectorPointers(vecp);
     for(auto i=0;i<vecp.size();++i)
     {
-      if(vecp[i]->LastName() == user.LastName())
+      if(vecp[i]->LastName() == actor.LastName())
       {
         res.push(vecp[i]);
       }
@@ -163,7 +163,7 @@ vector<User*> Users::GetUsersByLastName(const string& name)
   else
   {
     string nme = name;
-    usersindex indice;
+    actorsindex indice;
     indice.key = &nme;
     try
     {
@@ -182,22 +182,22 @@ vector<User*> Users::GetUsersByLastName(const string& name)
   return res;
 }
 
-const User& Users::GetUser(int ID) const
+const Actor& Actors::GetActor(int ID) const
 {
-  return getElement(User(ID));
+  return getElement(Actor(ID));
 }
 
-const vector<const User *> Users::GetUsersByFirstName(const string& name) const
+const vector<const Actor *> Actors::GetActorsByFirstName(const string& name) const
 {
-  User user(name, "","","");
-  vector<const User*> res;
+  Actor actor(name, "","","");
+  vector<const Actor*> res;
   if(_IndexOnFirstName==-1)
   {
-    vector<User*> vecp;
+    vector<Actor*> vecp;
     _data.TreeToVectorPointers(vecp);
     for(auto i=0;i<vecp.size();++i)
     {
-      if(vecp[i]->FirstName() == user.FirstName())
+      if(vecp[i]->FirstName() == actor.FirstName())
       {
         res.push(vecp[i]);
       }
@@ -206,7 +206,7 @@ const vector<const User *> Users::GetUsersByFirstName(const string& name) const
   else
   {
     string nme = name;
-    usersindex indice;
+    actorsindex indice;
     indice.key = &nme;
     try
     {
@@ -225,12 +225,12 @@ const vector<const User *> Users::GetUsersByFirstName(const string& name) const
   return res;
 }
 
-const vector<const User *> Users::GetUsersByLastName(const string& name) const
+const vector<const Actor *> Actors::GetActorsByLastName(const string& name) const
 {
-  vector<const User*> res;
+  vector<const Actor*> res;
   if(_IndexOnLastName==-1)
   {
-    vector<User*> vecp;
+    vector<Actor*> vecp;
     _data.TreeToVectorPointers(vecp);
     for(auto i=0;i<vecp.size();++i)
     {
@@ -243,9 +243,9 @@ const vector<const User *> Users::GetUsersByLastName(const string& name) const
   else
   {
     string nme = name;
-    usersindex indice;
+    actorsindex indice;
     indice.key = &nme;
-    usersindex& Indice = indice;
+    actorsindex& Indice = indice;
     try
     {
       Indice = _indexes[_IndexOnLastName].get(indice);
@@ -263,24 +263,24 @@ const vector<const User *> Users::GetUsersByLastName(const string& name) const
   return res;
 }
 
-bool Users::RemoveElement(const User& user)
+bool Actors::RemoveElement(const Actor& actor)
 {
-  if(!_data.find(user))
+  if(!_data.find(actor))
   {
     return false;
   }
-  User& usrRef = _data.get(user);
+  Actor& actRef = _data.get(actor);
   count++;
   if(_IndexOnFirstName!=-1)
   {
-    usersindex indice;
-    indice.key = &(usrRef.FirstName());
+    actorsindex indice;
+    indice.key = &(actRef.FirstName());
     auto Indice = _indexes[_IndexOnFirstName].get(indice);
     auto vecUs = Indice.pointers;
-    vector<User*> newVec;
+    vector<Actor*> newVec;
     for(auto i=0;i<vecUs.size();++i)
     {
-      if(vecUs[i]->ID()!=usrRef.ID())
+      if(vecUs[i]->ID()!=actRef.ID())
       {
         newVec.push(vecUs[i]);
       }
@@ -293,14 +293,14 @@ bool Users::RemoveElement(const User& user)
   }
   if(_IndexOnLastName!=-1)
   {
-    usersindex indice;
-    indice.key = &(usrRef.LastName());
+    actorsindex indice;
+    indice.key = &(actRef.LastName());
     auto Indice = _indexes[_IndexOnLastName].get(indice);
     auto vecUs = Indice.pointers;
-    vector<User*> newVec;
+    vector<Actor*> newVec;
     for(auto i=0;i<vecUs.size();++i)
     {
-      if(vecUs[i]->ID()!=usrRef.ID())
+      if(vecUs[i]->ID()!=actRef.ID())
       {
         newVec.push(vecUs[i]);
       }
@@ -311,71 +311,71 @@ bool Users::RemoveElement(const User& user)
     }
     Indice.pointers=move(newVec);
   }
-  if(_IndexOnAdress!=-1)
+  if(_IndexOnBirthDate!=-1)
   {
-    usersindex indice;
-    indice.key = &(usrRef.Adress());
-    auto Indice = _indexes[_IndexOnAdress].get(indice);
+    actorsindex indice;
+    indice.key = &(actRef.BirthDate());
+    auto Indice = _indexes[_IndexOnBirthDate].get(indice);
     auto vecUs = Indice.pointers;
-    vector<User*> newVec;
+    vector<Actor*> newVec;
     for(auto i=0;i<vecUs.size();++i)
     {
-      if(vecUs[i]->ID()!=usrRef.ID())
+      if(vecUs[i]->ID()!=actRef.ID())
       {
         newVec.push(vecUs[i]);
       }
     }
     if(newVec.size()==0)
     {
-      _indexes[_IndexOnAdress].remove(indice);
+      _indexes[_IndexOnBirthDate].remove(indice);
     }
     Indice.pointers=move(newVec);
   }
-  if(_IndexOnTelephone!=-1)
+  if(_IndexOnBirthPlace!=-1)
   {
-    usersindex indice;
-    indice.key = &(usrRef.Phone());
-    auto Indice = _indexes[_IndexOnTelephone].get(indice);
+    actorsindex indice;
+    indice.key = &(actRef.BirthPlace());
+    auto Indice = _indexes[_IndexOnBirthPlace].get(indice);
     auto vecUs = Indice.pointers;
-    vector<User*> newVec;
+    vector<Actor*> newVec;
     for(auto i=0;i<vecUs.size();++i)
     {
-      if(vecUs[i]->ID()!=usrRef.ID())
+      if(vecUs[i]->ID()!=actRef.ID())
       {
         newVec.push(vecUs[i]);
       }
     }
     if(newVec.size()==0)
     {
-      _indexes[_IndexOnTelephone].remove(indice);
+      _indexes[_IndexOnBirthPlace].remove(indice);
     }
     Indice.pointers=move(newVec);
   }
-  _data.remove(user);
+  _data.remove(actor);
   return true;
 }
 
-void Users::AddElement(User& user)
+void Actors::AddElement(Actor& actor)
 {
-  Table<User>::AddElement(user);
-  User& usr = getElement(user);
+  Table<Actor>::AddElement(actor);
+  Actor& act = getElement(actor);
   if(_IndexOnFirstName!=-1)
   {
-    usersindex indice;
-    indice.key = &(usr.FirstName());
-    indice.pointers.push(&usr);
+    actorsindex indice;
+    indice.key = &(act.FirstName());
+    indice.pointers.push(&act);
     try
     {
       _indexes[_IndexOnFirstName].push(indice);
     }
     catch (invalid_argument err)
     {
-      _indexes[_IndexOnFirstName].get(indice).pointers.push(&usr);
+      _indexes[_IndexOnFirstName].get(indice).pointers.push(&act);
     }
   }
 }
 
-void Users::printIndex(int ind) const
+void Actors::printIndex(int ind) const
 {
   _indexes[ind].printBST();
 }
