@@ -1,11 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include "include/film.h"
-#include "include/user.h"
-#include "include/genre.h"
-#include "include/actor.h"
-#include "include/table.h"
-#include "include/users.h"
+#include "film.h"
+#include "user.h"
+#include "genre.h"
+#include "actor.h"
+#include "table.h"
+#include "users.h"
 
 using namespace std;
 
