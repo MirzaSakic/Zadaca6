@@ -1,12 +1,12 @@
 #include <iostream>
-#include "film_borrowed.h"
+#include "../include/film_borrowed.h"
 
 FilmBorrowed::FilmBorrowed(int IDUser,int IDFilm,const Date& date_of_borrowing):
 				_IDUser(IDUser), _IDFilm(IDFilm), _date_of_borrowing(date_of_borrowing) {}
 
 FilmBorrowed::FilmBorrowed(int IDUser,int IDFilm,const Date& date_of_borrowing,const Date& date_of_returning):
 				_IDUser(IDUser), _IDFilm(IDFilm), _date_of_borrowing(date_of_borrowing), _date_of_returning(date_of_returning) {}
-				
+
 FilmBorrowed::FilmBorrowed(std::string& filmBorrowed) {
 	int i=0;
 	int temporary=0;
@@ -40,14 +40,43 @@ FilmBorrowed::FilmBorrowed(std::string& filmBorrowed) {
 			i=-1;
 			++temporary;
 			}
+		if(filmBorrowed[i]==',' && temporary==4){
+			int year=stoi(filmBorrowed.substr(0,i));
+			_date_of_borrowing.Year()=year;
+			filmBorrowed=filmBorrowed.substr(i+1);
+			i=-1;
+			++temporary;
+			}
+		if(filmBorrowed[i]==',' && temporary==5){
+			int day=stoi(filmBorrowed.substr(0,i));
+			_date_of_returning.Day()=day;
+			filmBorrowed=filmBorrowed.substr(i+1);
+			i=-1;
+			++temporary;
+			}
+		if(filmBorrowed[i]==',' && temporary==6){
+			int month=stoi(filmBorrowed.substr(0,i));
+			_date_of_returning.Month()=month;
+			filmBorrowed=filmBorrowed.substr(i+1);
+			i=-1;
+			++temporary;
+			}
 	++i;
 		}
-	int year=stoi(filmBorrowed);
-	_date_of_borrowing.Year()=year;
+	if(temporary==4){
+		int year=stoi(filmBorrowed);
+		_date_of_borrowing.Year()=year;
+		}
+	
+	if(temporary==7){
+		int year=stoi(filmBorrowed);
+		_date_of_returning.Year()=year;
 	}
+}
             
 const int& FilmBorrowed::IDUser() const {return _IDUser;}
 const int& FilmBorrowed::IDFilm() const {return _IDFilm;}
+const int& FilmBorrowed::ID() 	  const {return _IDUser;}
 const Date& FilmBorrowed::DateOfBorrowing() const {return _date_of_borrowing;}	
 const Date& FilmBorrowed::DateOfReturning() const {return _date_of_returning;}
 
@@ -61,6 +90,7 @@ void FilmBorrowed::setFilmBorrowed(int IDUser,int IDFilm,const Date& dateOfBorro
 
 int& FilmBorrowed::IDUser() {return _IDUser;}
 int& FilmBorrowed::IDFilm() {return _IDFilm;}
+int& FilmBorrowed::ID() 	{return _IDUser;}
 Date& FilmBorrowed::DateOfBorrowing() {return _date_of_borrowing;}
 Date& FilmBorrowed::DateOfReturning() {return _date_of_returning;}
 
