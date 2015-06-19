@@ -80,6 +80,7 @@ vector<T>& vector<T>::operator=(vector<T>&& tempVector)
   _array = tempVector._array;
   tempVector._array = nullptr;
   tempVector._size = 0;
+  return *this;
 }
 
 template<typename T>

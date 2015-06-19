@@ -19,6 +19,7 @@ class FilmGenre{
 
     FilmGenre& operator = (const FilmGenre&);
 
+    int ID() const { return -1; }
     const int& IDFilm () const;
     const int& IDGenre() const;
     int& IDFilm();

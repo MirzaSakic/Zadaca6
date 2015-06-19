@@ -21,7 +21,9 @@ class Date
     
     int& Day() { return _day; }
     int& Month() { return _month; }
-    int& Year() { return _year; } 
+    int& Year() { return _year; }
+
+    bool empty() const { return _day==0&&_month==0&&_year==0; } 
     
     bool operator>(const Date& other) const
     {

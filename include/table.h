@@ -12,8 +12,8 @@
 template<typename T>
 class Table
 {
-  using func = std::function<bool(const T&, const T&)>;
   public:
+    using func = std::function<bool(const T&, const T&)>;
     Table() = default;
     Table(func gT,func lT,func eq) : _data(gT,lT,eq) {}
     Table(const BinaryTree<T>& data) : _data(data) {}

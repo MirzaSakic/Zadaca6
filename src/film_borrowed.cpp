@@ -117,10 +117,10 @@ std::ostream& operator<<(std::ostream& out,const FilmBorrowed& filmBorrowed)
 		out<<"\nDate of borrowing: "<<filmBorrowed._date_of_borrowing<<std::endl;
 		out<<"Date of returning: "<<filmBorrowed._date_of_returning<<std::endl;
 	}
-	else
+	/*else
 		out<<filmBorrowed._IDUser<<","<<filmBorrowed._IDFilm<<","<<filmBorrowed._date_of_borrowing<<",";
 		
 		<<filmBorrowed._date_of_returning;
-		if()
+		if()*/
 	return out;	
 }

@@ -29,6 +29,8 @@ class BinaryTree
     bool remove(const T&);
     const T& get(const T&) const;
     T& get(const T&);
+    template<typename U>
+    sp::vector<U> getAll(const T&) const;
 
     void inOrder(std::ostream&) const;
     //void postOrder() const;
@@ -254,6 +256,35 @@ T& BinaryTree<T>::get(const T& element)
       temp = temp -> rlink;
   }
   if(verbose) std::cout<<"Search took "<<count<<" steps\n";
+  throw std::invalid_argument("Element does not exist!");
+}
+
+template<typename T>
+template<typename U>
+sp::vector<U> BinaryTree<T>::getAll(const T& element) const
+{
+  Node<T>* temp = root;
+  //count=0;
+  sp::vector<U> res;
+  while(temp!=nullptr)
+  {
+    //++count;
+    if(equal(temp->info, element))
+    {
+      while(temp!=nullptr && equal(temp->info, element))
+      {
+        res.push(&(temp->info));
+        temp = temp->rlink;
+      }
+      //if(verbose) std::cout<<"Search took "<<count<<" steps.\n";
+      return res;
+    }
+    else if(greaterThan(temp->info, element))
+      temp=temp->llink;
+    else
+      temp=temp->rlink;
+  }
+  //if(verbose) std::cout<<"Search took "<<count<<" steps.\n";
   throw std::invalid_argument("Element does not exist!");
 }
 

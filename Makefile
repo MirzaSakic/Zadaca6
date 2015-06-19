@@ -4,7 +4,7 @@ OPTIMIZE=-O0
 
 INCPATH = include
 
-CFLAGS= -std=c++11 $(OPTIMIZE) -fdiagnostics-color=always -I$(INCPATH) -Wall
+CFLAGS= -std=c++11 $(OPTIMIZE) -fdiagnostics-color=always -I$(INCPATH) -Wall -Wno-reorder
 
 HDRS= include/*.h
 SRCS= main.cpp src/*.cpp
