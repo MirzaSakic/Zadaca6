@@ -20,12 +20,14 @@ class FilmBorrowed{
 				
 		const int& IDUser() const;
 		const int& IDFilm() const;
+		const int& ID() const;
 		const Date& DateOfBorrowing() const;
 		const Date& DateOfReturning() const;
 		
 		void setFilmBorrowed(int IDUser,int IDFilm,const Date& dateOfBorrowing,const Date& dateOfReturning);
 		int& IDUser();
 		int& IDFilm();
+		int& ID();
 		Date& DateOfBorrowing();	
 		Date& DateOfReturning();
 		
@@ -45,3 +47,4 @@ class FilmBorrowed{
 	};
 
 #endif
+
