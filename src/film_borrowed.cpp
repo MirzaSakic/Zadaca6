@@ -12,6 +12,8 @@ FilmBorrowed::FilmBorrowed(std::string& filmBorrowed) {
 	int temporary=0;
 	
 	while(filmBorrowed[i]!='\0'){
+		if(filmBorrowed[i+1]==',' && filmBorrowed[i]==',')
+			break;
 		if(filmBorrowed[i]==',' && temporary==0){
 			int idUser=stoi(filmBorrowed.substr(0,i));
 			IDUser()=idUser;
@@ -116,6 +118,9 @@ std::ostream& operator<<(std::ostream& out,const FilmBorrowed& filmBorrowed)
 		out<<"Date of returning: "<<filmBorrowed._date_of_returning<<std::endl;
 	}
 	else
-		out<<filmBorrowed._IDUser<<","<<filmBorrowed._IDFilm<<","<<filmBorrowed._date_of_borrowing<<","<<filmBorrowed._date_of_returning;
+		out<<filmBorrowed._IDUser<<","<<filmBorrowed._IDFilm<<","<<filmBorrowed._date_of_borrowing<<",";
+		
+		<<filmBorrowed._date_of_returning;
+		if()
 	return out;	
 }
