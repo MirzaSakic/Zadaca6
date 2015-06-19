@@ -105,7 +105,7 @@ bool Actor::operator!=(const Actor& other) const{
 
 std::ostream& operator<<(std::ostream& out,Actor const& actor) {
 	if(out==std::cout)
-	out<<"First Name: "<<actor._FirstName<<"Last Name: "<<actor._LastName<<"Birth date: "<<actor._BirthDate<<"Birth place: "<<actor._BirthPlace<<std::endl;
+	out<<"ID: "<<actor._ID<<"\nFirst Name: "<<actor._FirstName<<"Last Name: "<<actor._LastName<<"Birth date: "<<actor._BirthDate<<"Birth place: "<<actor._BirthPlace<<std::endl;
 	else {
 	out<<actor._FirstName<<","<<actor._LastName<<","<<actor._BirthDate<<","<<actor._BirthPlace; }
 	return out;
