@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/filmgenre.h"
+#include "filmgenre.h"
 
 using namespace std;
 

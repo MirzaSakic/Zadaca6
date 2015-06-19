@@ -1,4 +1,4 @@
-#include "../include/actor.h"
+#include "actor.h"
 
 Actor::Actor(const int& ID,const std::string& firstName,const std::string& lastName,const std::string& Birthdate,const std::string& Birthplace){
 	_ID=ID;	
@@ -19,6 +19,8 @@ Actor::Actor(const std::string& firstName,const std::string& lastName){
 	_LastName=lastName;
 	
 	}
+Actor::Actor(int ID){ _ID=ID;}
+
 Actor::Actor(std::string& actor){
 		int i=0;
 	
@@ -103,7 +105,7 @@ bool Actor::operator!=(const Actor& other) const{
 
 std::ostream& operator<<(std::ostream& out,Actor const& actor) {
 	if(out==std::cout)
-	out<<"First Name: "<<actor._FirstName<<"Last Name: "<<actor._LastName<<"Birth date: "<<actor._BirthDate<<"Birth place: "<<actor._BirthPlace<<std::endl;
+	out<<"ID: "<<actor._ID<<"\nFirst Name: "<<actor._FirstName<<"\nLast Name: "<<actor._LastName<<"\nBirth date: "<<actor._BirthDate<<"\nBirth place: "<<actor._BirthPlace<<std::endl;
 	else {
 	out<<actor._FirstName<<","<<actor._LastName<<","<<actor._BirthDate<<","<<actor._BirthPlace; }
 	return out;

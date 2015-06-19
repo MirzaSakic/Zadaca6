@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/filmactor.h"
+#include "filmactor.h"
 
 using namespace std;
 
