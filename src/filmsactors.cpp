@@ -33,9 +33,8 @@ FilmActor& FilmsActors::GetRecord(int IDFilm, int IDActor)
   {
     if(tmpfilms[i]->IDActor() == IDActor)
      return *(tmpfilms[i]);
-    
   }
-
+  throw invalid_argument("Record does not exits.");
 }
 
 const FilmActor& FilmsActors::GetRecord(int IDFilm, int IDActor) const
@@ -45,9 +44,9 @@ const FilmActor& FilmsActors::GetRecord(int IDFilm, int IDActor) const
   for(auto i=0;i<tmpfilms.size();++i)
   {
     if(tmpfilms[i]->IDActor() == IDActor)
-     return *(tmpfilms[i]);
-    
+     return *(tmpfilms[i]); 
   }
+  throw invalid_argument("Record does not exist.");
 }
 
 sp::vector<FilmActor*> FilmsActors::GetRecordsForActor(int IDActor) 

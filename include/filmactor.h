@@ -21,7 +21,9 @@ class FilmActor{
 
     const int& IDFilm () const;
     const int& IDActor() const;
-    int ID() const;
+    const int& ID() const;
+    int& ID();
+
     int& IDFilm();
     int& IDActor();
 

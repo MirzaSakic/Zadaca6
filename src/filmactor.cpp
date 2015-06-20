@@ -29,8 +29,10 @@ FilmActor& FilmActor::operator = (const FilmActor& other)
 
 const int& FilmActor::IDFilm() const {return _IDFilm;}
 const int& FilmActor::IDActor() const {return _IDActor;}
-int& FilmActor:: IDFilm() {return _IDFilm;}
+int& FilmActor::IDFilm() {return _IDFilm;}
 int& FilmActor::IDActor() {return _IDActor;}
+const int& FilmActor::ID() const { return _IDFilm; }
+int& FilmActor::ID() { return _IDFilm; }
 
 bool FilmActor::operator == (const FilmActor& other) const {return _IDFilm == other._IDFilm;}
 bool FilmActor::operator != (const FilmActor& other) const {return _IDFilm != other._IDFilm;}

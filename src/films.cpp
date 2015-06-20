@@ -182,7 +182,7 @@ const vector<const Film*>GetFilmsByReleaseYear(int release) const
 }
 */
 
-const vector<Film*> Films::GetFilmsByTitle(const std::string& title) const 
+const vector<const Film*> Films::GetFilmsByTitle(const std::string& title) const 
 {
   Film film(0,0,title);
   vector< const Film*> res;
@@ -192,7 +192,7 @@ const vector<Film*> Films::GetFilmsByTitle(const std::string& title) const
     _data.TreeToVectorPointers(vecp);
     for(auto i=0;i<vecp.size();++i)
     {
-      if vecp[i]->title() == film.title();
+      if(vecp[i]->title() == film.title())
       {
         res.push(vecp[i]);
       }
