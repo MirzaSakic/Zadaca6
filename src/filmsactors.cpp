@@ -22,164 +22,75 @@ void FilmsActors::AddIndexOnActors()
       _IndexOnActors.get(indice).pointers.push(vecp[i]);
     }
   }
-  _IndexOnFilms.BalanceTree();
+  _IndexOnActors.BalanceTree();
 }
 
-FilmActor& FilmsActors::GetBorrowedRecord(int IDFilm, int IDActor)
+FilmActor& FilmsActors::GetRecord(int IDFilm, int IDActor)
 {
-  FilmActor temp(IDFilm, IDActor);
+  FilmActor temp(IDFilm, 0);
   vector<FilmActor*> tmpfilms = _data.getAll<FilmActor*>(temp);
-  vector<FilmActor*> Films;
   for(auto i=0;i<tmpfilms.size();++i)
   {
     if(tmpfilms[i]->IDActor() == IDActor)
-    {
-      Films.push(tmpfilms[i]);
-    }
-  }
-  for(auto i=0;i<Films.size();++i)
-  {
+     return *(tmpfilms[i]);
     
-      return *Films[i];
   }
-  throw invalid_argument("Record does not exist.");
+
 }
 
-const FilmActor& FilmsActors::GetBorrowedRecord(int IDFilm, int IDActor) const
+const FilmActor& FilmsActors::GetRecord(int IDFilm, int IDActor) const
 {
-  FilmActor temp(IDFilm ,IDActor );
+  FilmActor temp(IDFilm, 0);
   vector<FilmActor*> tmpfilms = _data.getAll<FilmActor*>(temp);
-  vector<FilmActor*> Films;
   for(auto i=0;i<tmpfilms.size();++i)
   {
     if(tmpfilms[i]->IDActor() == IDActor)
-    {
-      Films.push(tmpfilms[i]);
-    }
+     return *(tmpfilms[i]);
+    
   }
-  for(auto i=0;i<Films.size();++i)
-  {
-   
-      return *Films[i];
-  }
-  throw invalid_argument("Record does not exist.");
 }
 
-sp::vector<FilmActor*> FilmsActors::GetBorrowedRecords(int IDFilm, int IDActor)
-{
-  FilmActor temp(IDFilm, IDActor);
-  vector<FilmActor*> tmpfilms = _data.getAll<FilmActor*>(temp);
-  vector<FilmActor*> Films;
-  for(auto i=0;i<tmpfilms.size();++i)
-  {
-    if(tmpfilms[i]->IDActor() == IDActor )
-    {
-      Films.push(tmpfilms[i]);
-    }
-  }
-  return move(Films);
-}
-
-const sp::vector<const FilmActor*> FilmsActors::GetBorrowedRecords(int IDFilm, int IDActor){
-  FilmActor temp(IDFilm, IDActor);
-  vector<FilmActor*> tmpfilms = _data.getAll<FilmActor*>(temp);
-  vector<const FilmActor*> Films;
-  for(auto i=0;i<tmpfilms.size();++i)
-  {
-    if(tmpfilms[i]->IDActor() == IDActor)
-    {
-      Films.push(tmpfilms[i]);
-    }
-  }
-  return move(Films);
-}
-
-sp::vector<FilmActor*> FilmsActors::GetRecordsForUser(int IDUser)
+sp::vector<FilmActor*> FilmsActors::GetRecordsForActor(int IDActor) 
 {
   FilmActor temp(0, IDActor);
- // cout<<"aab\n";
-  vector<FilmActor*> Records = _data.getAll<FilmActor*>(temp);
- // cout<<"aac\n";
+  tableindex indice;
+  indice.key = &IDActor;
+  vector<FilmActor*> Records = _IndexOnActors.get(indice).pointers;
   return move(Records);
+
 }
+
 
 const sp::vector<const FilmActor*> FilmsActors::GetRecordsForActor(int IDActor) const
 {
   FilmActor temp(0, IDActor);
-  const vector<const FilmActor*> Records = _data.getAll<const FilmActor*>(temp);
+  tableindex indice;
+  indice.key = &IDActor;
+  vector<FilmActor*> temprcs = _IndexOnActors.get(indice).pointers;
+  vector<const FilmActor*> Records;
+  for(auto i=0;i<temprcs.size();++i)
+  {
+    Records.push(move(temprcs[i]));
+  }
   return move(Records);
+
 }
 
 sp::vector<FilmActor*> FilmsActors::GetRecordsForFilm(int IDFilm)
 {
   FilmActor temp(IDFilm, 0);
-  tableindex indice;
-  indice.key = &IDFilm;
-  vector<FilmActor*> Films = _IndexOnFilms.get(indice).pointers;
-  return move(Films);
+  vector<FilmActor*> Records = _data.getAll<FilmActor*>(temp);
+  return move(Records);
 }
 
 const sp::vector<const FilmActor*> FilmsActors::GetRecordsForFilm(int IDFilm) const
 {
   FilmActor temp(IDFilm, 0);
-  tableindex indice;
-  indice.key = &IDFilm;
-  vector<FilmActor*> tempmvs = _IndexOnFilms.get(indice).pointers;
-  vector<const FilmActor*> Films;
-  for(auto i=0;i<tempmvs.size();++i)
-  {
-    Films.push(move(tempmvs[i]));
-  }
-  return move(Films);
+  const vector<const FilmActor*> Records = _data.getAll<const FilmActor*>(temp);
+  return move(Records);
 }
 
-sp::vector<FilmActor*> FilmsActors::GetBorrowedRecordsForActor(int IDActor)
-{
- // cout<<"aa\n";
-  vector<FilmActor*> all = GetRecordsForActor(IDActor);
-  vector<FilmActor*> res;
-  for(auto i=0;i<all.size();++i)
-  {
-  //  if(all[i]->DateOfReturning().empty())
-      res.push(all[i]);
-  }
-  return move(res);
-}
 
-const sp::vector<const FilmActor*> FilmsActors::GetBorrowedRecordsForActor(int IDActor) const
-{
-  vector<const FilmActor*> all = GetRecordsForActor(IDActor);
-  vector<const FilmActor*> res;
-  for(auto i=0;i<all.size();++i)
-  {
-    //if(all[i]->DateOfReturning().empty())
-      res.push(all[i]);
-  }
-  return move(res);
-}
-
-vector<FilmActor*> FilmsActors::GetBorrowedRecordsForFilm(int IDFilm)
-{
-  vector<FilmActor*> all = GetRecordsForFilm(IDFilm);
-  vector<FilmActor*> res;
-  for(auto i=0;i<all.size();++i)
-  {
-   // if(all[i]->DateOfReturning().empty())
-      res.push(all[i]);
-  }
-  return move(res);
-}
-
-const vector<const FilmActor*> FilmsActors::GetBorrowedRecordsForFilm(int IDFilm) const
-{
-  vector<const FilmActor*> all = GetRecordsForFilm(IDFilm);
-  vector<const FilmActor*> res;
-  for(auto i=0;i<all.size();++i)
-  {
-      res.push(all[i]);
-  }
-  return move(res);
-}
 
 void FilmsActors::LoadFromFile()
 {
@@ -199,7 +110,7 @@ void FilmsActors::LoadFromFile()
     values.push(temp);
   }
   _data.BalanceTree(values);
-  AddIndexOnMovies();
+  AddIndexOnActors();
 }
 
 void FilmsActors::AddElement(FilmActor& element)
