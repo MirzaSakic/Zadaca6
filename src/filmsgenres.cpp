@@ -122,13 +122,13 @@ void FilmsGenres::LoadFromFile()
   if(!input.is_open())
     throw invalid_argument("File does not exist");
   string line;
-  string t = "1,3,10,6,2015,,,";
-  FilmGenre temp1(t);
+  //string t = "1,3,10,6,2015,,,";
+ // FilmGenre temp1(t);
   while(1)
   {
     getline(input,line);
     if((!input) || line[0] == '\n') break;
-    cout<<line<<endl;
+   // cout<<line<<endl;
     FilmGenre temp(line);
     values.push(temp);
   }

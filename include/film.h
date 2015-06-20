@@ -16,11 +16,6 @@ class Film {
     Film(int,const std::string&);
     Film(int);
     Film(const std::string&);
-    
-    Film(const Film&);
-    ~Film()=default;
-    
-    Film& operator = (const Film&) ;
 
     int& ID ();
     int& release_year ();

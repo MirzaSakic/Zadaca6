@@ -15,9 +15,6 @@ class Genre {
     Genre(int);
     Genre(const std::string&);
 
-    Genre(const Genre&);
-    Genre& operator = (const Genre&);
-
     int& ID();
     std::string& genre_name();
     const int& ID() const;

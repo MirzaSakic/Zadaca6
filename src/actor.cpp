@@ -107,7 +107,7 @@ std::ostream& operator<<(std::ostream& out,Actor const& actor) {
 	if(out==std::cout)
 	out<<"ID: "<<actor._ID<<"\nFirst Name: "<<actor._FirstName<<"\nLast Name: "<<actor._LastName<<"\nBirth date: "<<actor._BirthDate<<"\nBirth place: "<<actor._BirthPlace<<std::endl;
 	else {
-	out<<actor._FirstName<<","<<actor._LastName<<","<<actor._BirthDate<<","<<actor._BirthPlace; }
+	out<<actor._ID<<','<<actor._FirstName<<","<<actor._LastName<<","<<actor._BirthDate<<","<<actor._BirthPlace; }
 	return out;
 	}
 

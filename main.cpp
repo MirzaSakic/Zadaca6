@@ -13,6 +13,7 @@
 #include "filmsactors.h"
 #include "filmgenre.h"
 #include "filmsgenres.h"
+#include "film_borrowed.h"
 
 using namespace std;
 
@@ -21,8 +22,11 @@ int AddUser(Users&);
 int AddMovie(Films&, Actors&, Genres&, FilmsActors&, FilmsGenres&);
 int AddActor(Actors&);
 int AddGenre(Genres&);
-bool RentAMovie(UsersMovies&,User&);
-bool ReturnAMovie(UsersMovies&,User&);
+bool RentAMovie(UsersMovies&,Films&);
+bool ReturnAMovie(UsersMovies&);
+void SaveChanges(bool*,Users&,Films&,Actors&,Genres&,UsersMovies&,FilmsActors&,FilmsGenres&);
+void RentedMovies(UsersMovies&,Users&);
+void RentHistory(UsersMovies&,Users&);
 
 
 const string file_users="database/users.zad6";
@@ -145,6 +149,7 @@ int main(int argc, char *argv[])
   users.AddIndexOnLastName();
   //users.RemoveElement(temp);
   //users.printIndex(0);
+  Film pomm("1,The Godfather,2015");
   
   UserHasMovie.setFilePath(file_users_movies);
   UserHasMovie.LoadFromFile();
@@ -166,41 +171,106 @@ int main(int argc, char *argv[])
   cout<<"Genres loaded\n";
   genres.AddIndexOnGenre_name();
   
+  FilmHasGenres.setFilePath(file_movies_genres);
+  FilmHasGenres.LoadFromFile();
+  cout<<"FilmHasGenres loaded\n";
+  
+  FilmHasActors.setFilePath(file_movies_actors);
+  FilmHasActors.LoadFromFile();
+  cout<<"FilmHasActors loaded\n";
 
 /*users.printTree();
   UserHasMovie.printTree();
   movies.printTree();
   actors.printTree();
   genres.printTree();*/
-  int choice=7;
+  int choice=-1;
+  bool save[7];
   while(choice)
   {
     choice = printMenu();
     switch(choice)
     {
       case 0:
+		{
+		char temp;
+		cout<<"Do you want to save changes: (y/n) ";
+		cin>>temp;
+		cin.ignore();
+		if(temp=='y')
+		{
+		  SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
+		  cout<<"Changes successfully changed."<<endl;
+		}
         break;
+		}
       case 1:
         {
           cout<<"New users ID: "<<AddUser(users)<<endl;
           users.printTree();
+          save[0]=true;
           break;
         }
       case 2:
         {
           cout<<"New movies ID: "<<AddMovie(movies, actors, genres, FilmHasActors, FilmHasGenres)<<endl;
-          break;
+          save[1]=true;
+		  save[2]=true;
+		  save[6]=true;
+		  save[3]=true;
+		  save[5]=true;
+		  FilmHasGenres.printTree();
+		  
+		  break;
         }
       case 3:
         {
           cout<<"New actors ID: "<<AddActor(actors)<<endl;
+          save[2]=true;
           break;
         }
       case 4:
         {
           cout<<"New genres ID: "<<AddGenre(genres)<<endl;
+          save[3]=true;
           break;
         }
+      case 5:
+        {
+          if(RentAMovie(UserHasMovie, movies))
+          {
+            cout<<"Movie successfully rented.\n";
+            save[1]=true;
+            save[4]=true;
+          }
+          else
+          {
+            cout<<"Error while renting a movie.\n";
+          }
+          break;
+        }
+      case 6:
+		{
+		  ReturnAMovie(UserHasMovie);
+		  save[4]=true;
+		  break;
+		}
+	  case 7:
+		{
+			RentedMovies(UserHasMovie,users);
+			break;
+		}
+	  case 8:
+		{
+			RentHistory(UserHasMovie,users);
+			break;
+		}
+	  case 9:
+		{
+			SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
+			cout<<"Changes successfully changed."<<endl;
+			break;
+		}
       default:
         {
           cout<<"Wrong choice\n";
@@ -221,6 +291,9 @@ int printMenu()
   cout<<"4 Add new genre"<<endl;
   cout<<"5 Rent a movie"<<endl;
   cout<<"6 Return a movie"<<endl;
+  cout<<"7 Rented movies of user"<<endl;
+  cout<<"8 Rent history of user"<<endl;
+  cout<<"9 Save changes"<<endl;
   cout<<"0 End program"<<endl;
   cin>>choice;
   cin.ignore();
@@ -318,6 +391,7 @@ int AddMovie(Films& movies, Actors& actors, Genres& genres, FilmsActors& filmact
       } 
       FilmActor tempInter(movie.ID(), tempID);
       filmactors.AddElement(tempInter);
+      
     }
   }
   cout<<"Enter number of genres: \n";
@@ -345,3 +419,183 @@ int AddMovie(Films& movies, Actors& actors, Genres& genres, FilmsActors& filmact
   } 
   return movie.ID();
 }
+bool ReturnAMovie(UsersMovies& usermovies)
+{
+	int IDUser,IDMovie;
+	cout<<"Enter user's ID: ";
+	cin>>IDUser;
+	cin.ignore();
+	cout<<"Enter movie's ID: ";
+	cin>>IDMovie;
+	cin.ignore();
+	try
+	{
+		int day,month,year;
+		cout<<"Enter day of returning: ";
+		cin>>day;
+		cin.ignore();
+		cout<<"Enter month of returning: ";
+		cin>>month;
+		cin.ignore();
+		cout<<"Enter year of returning: ";
+		cin>>year;
+		cin.ignore();
+		Date date(day,month,year);
+		usermovies.GetBorrowedRecord(IDUser,IDMovie).DateOfReturning()=date;
+		cout<<"Movie successfully returned."<<endl;
+		return true;
+	}
+	catch(invalid_argument err)
+	{
+	cout<<err.what()<<endl;
+	}
+	return false;
+}
+
+void SaveChanges(bool *save,Users& users,Films& movies,Actors& actors,Genres& genres,
+						UsersMovies& UserHasMovie,FilmsActors& FilmHasActors,FilmsGenres& FilmHasGenres)
+{
+	for(int i=0;i<7;++i)
+		if(save[i]==true){
+			if(i==0)
+				users.ExportToFile();
+			if(i==1)
+				movies.ExportToFile();
+			if(i==2)
+				actors.ExportToFile();
+			if(i==3)
+				genres.ExportToFile();
+			if(i==4)
+				UserHasMovie.ExportToFile();
+			if(i==5)
+				FilmHasActors.ExportToFile();
+			if(i==6)
+				FilmHasGenres.ExportToFile();
+		}
+			
+}
+
+
+bool RentAMovie(UsersMovies& usersMovies,Films& films)
+{
+  
+  string moviename;
+  int Id;
+  cout<<"Enter users ID: ";
+  cin>>Id;
+  cin.ignore();
+  //films.printTree();
+  cout<<"Enter movie's name: ";
+  getline(cin,moviename);
+  sp::vector<Film*> found = films.GetFilmsByTitle(moviename);
+  if(found.size()==0)
+  {
+    cout<<"Movie not found!\n";
+    return false;
+  }
+  else
+  {
+    cout<<"Found movies: \n";
+    for(auto j=0;j<found.size();++j)
+    {
+      cout<<*found[j]<<endl;
+    }
+    cout<<"Enter movie ID:";
+    int tempID;
+    cin>>tempID;
+    cin.ignore();
+    int day,month,year;
+    cout<<"Enter date (day month year): ";
+    cin>>day>>month>>year;
+    cin.ignore();
+    Date date(day,month,year);
+    FilmBorrowed usermovie(Id,tempID,date);
+    usersMovies.AddElement(usermovie);
+	}
+return true;
+}
+
+
+void RentedMovies(UsersMovies& usermovies,Users& users)
+{
+  int userID;
+  cout<<"Enter the ID of the user: ";
+  cin>>userID;
+  User user(userID);
+  
+  try
+  {
+    user = users.GetUser(userID);
+  }
+  catch(invalid_argument err)
+  {
+    cout<<err.what()<<endl;
+    return;
+  }
+  
+  sp::vector<FilmBorrowed*> vecp;
+
+  try
+  {
+    vecp=usermovies.GetBorrowedRecordsForUser(userID);
+  }
+  
+  catch(invalid_argument err)
+  {
+    cout<<err.what()<<endl;
+    return;
+  }
+  
+  if (vecp.size() == 0)
+  {
+    cout<<"The listed user has no rented movies"<<endl;
+  }
+
+  for(int i=0;i<vecp.size();i++)
+  {
+    cout<<*vecp[i]<<endl;
+  }
+}
+
+
+void RentHistory(UsersMovies& usermovies,Users& users) 
+{
+  int userID;
+  cout<<"Enter the ID of the user: ";
+  cin>>userID;
+  User user(userID);
+  try
+  {
+    user = users.GetUser(userID);
+  }
+  catch(invalid_argument err)
+  {
+    cout<<err.what()<<endl;
+    return;
+  }
+
+  sp::vector<FilmBorrowed*> vecp;
+  
+  try
+  {
+  vecp = usermovies.GetRecordsForUser(userID);
+  }
+
+  catch(invalid_argument err)
+  {
+    cout<<err.what();
+    return;
+  }
+
+  if(vecp.size() == 0)
+  {
+    cout<<"The listed user has never rented any movies"<<endl;
+    return;
+  }
+
+  for(int i = 0;i<vecp.size();++i)
+  {
+    cout<<*vecp[i]<<endl;
+  }
+}
+

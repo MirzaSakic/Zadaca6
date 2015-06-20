@@ -98,13 +98,11 @@ void FilmsActors::LoadFromFile()
   if(!input.is_open())
     throw invalid_argument("File does not exist");
   string line;
-  string t = "1,3";
-  FilmActor temp1(t);
   while(1)
   {
     getline(input,line);
     if((!input) || line[0] == '\n') break;
-    cout<<line<<endl;
+    //cout<<line<<endl;
     FilmActor temp(line);
     values.push(temp);
   }
@@ -114,6 +112,7 @@ void FilmsActors::LoadFromFile()
 
 void FilmsActors::AddElement(FilmActor& element)
 {
+	//cout<<"aa\n";
   _data.push(element);
   tableindex indice;
   indice.key = &(element.IDActor());
@@ -130,6 +129,7 @@ void FilmsActors::AddElement(FilmActor& element)
 
 void FilmsActors::AddElement(const FilmActor& element)
 {
+	//cout<<"bb\n";
   _data.push(element);
   FilmActor& record = getElement(element);
   tableindex indice;

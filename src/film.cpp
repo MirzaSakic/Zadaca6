@@ -24,14 +24,7 @@ Film::Film(const std::string& film)
   _title = title;
 }
 
-Film::Film(const Film& other) : _release_year(other._release_year), _title(other._title) {};
 
-Film& Film::operator = (const Film& other) 
-{
-  _release_year=other._release_year;
-  _title=other._title;
-  return *this;
-};
 
 
 int& Film::ID() {return _ID;}
@@ -41,12 +34,12 @@ const int& Film::ID() const {return _ID;}
 const int& Film::release_year() const {return _release_year;}
 const std::string& Film::title() const {return _title;}
 
-bool Film::operator== (const Film& other) const {return (_title == other._title);}
-bool Film::operator!= (const Film& other) const {return (_title != other._title);}
-bool Film::operator < (const Film& other) const {return (_title <  other._title);}
-bool Film::operator > (const Film& other) const {return (_title >  other._title);}
-bool Film::operator<= (const Film& other) const {return (_title <= other._title);}
-bool Film::operator>= (const Film& other) const {return (_title != other._title);}
+bool Film::operator== (const Film& other) const {return (_ID == other._ID);}
+bool Film::operator!= (const Film& other) const {return (_ID != other._ID);}
+bool Film::operator < (const Film& other) const {return (_ID <  other._ID);}
+bool Film::operator > (const Film& other) const {return (_ID >  other._ID);}
+bool Film::operator<= (const Film& other) const {return (_ID <= other._ID);}
+bool Film::operator>= (const Film& other) const {return (_ID != other._ID);}
 
 bool Film::byReleaseYear(const Film& other) const {return (_release_year < other._release_year);}
 bool Film::byTitle(const Film& other) const  {return (_title < other._title);}
@@ -55,10 +48,10 @@ std::ostream& operator << (std::ostream& out,const Film& film)
 {
   if(out==std::cout)
   {
-  out<<film._ID<<" "<<film._title<<" "<<film._release_year;
+  out<<film._ID<<" "<<film._title<<" "<<film._release_year<<std::endl;
   return out;
   }
-  out<<film._ID<<","<<film._title<<","<<film._release_year<<std::endl;
+  out<<film._ID<<","<<film._title<<","<<film._release_year;
   return out;
 }
 
