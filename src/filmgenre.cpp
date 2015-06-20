@@ -44,6 +44,11 @@ bool FilmGenre::byIDGenre (const FilmGenre& other) const {return _IDGenre <other
 
 ostream& operator << (ostream& out,const FilmGenre& filmgen)
 {
+  if(out == std::cout)
+  {
+    out<<filmgen._IDFilm<<" "<<filmgen._IDGenre;
+    return out;
+  }
   out<<filmgen._IDFilm<<","<<filmgen._IDGenre;
   return out;
 }

@@ -45,7 +45,12 @@ bool Genre::operator >= (const Genre& other) const {return (_genre_name >= other
 
 std::ostream& operator << (std::ostream& out,const Genre& genre)
 {
-  out<<genre._ID<<","<<genre._genre_name<<std::endl;
+  if (out == cout)
+  {
+    out<<genre._ID<<" "<<genre._genre_name;
+    return out;
+  }
+  out<<genre._ID<<","<<genre._genre_name;
   return out;
 }
 

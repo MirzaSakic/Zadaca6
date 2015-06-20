@@ -53,6 +53,11 @@ bool Film::byTitle(const Film& other) const  {return (_title < other._title);}
 
 std::ostream& operator << (std::ostream& out,const Film& film)
 {
+  if(out==std::cout)
+  {
+  out<<film._ID<<" "<<film._title<<" "<<film._release_year;
+  return out;
+  }
   out<<film._ID<<","<<film._title<<","<<film._release_year<<std::endl;
   return out;
 }

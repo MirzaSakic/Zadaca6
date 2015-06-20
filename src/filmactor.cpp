@@ -46,6 +46,11 @@ bool FilmActor::byIDActor (const FilmActor& other) const {return _IDActor <other
 
 ostream& operator << (ostream& out,const FilmActor& filmact)
 {
+  if(out==std::cout)
+  {
+    out<<filmact._IDFilm<<" "<<filmact._IDActor;
+    return out;
+  }
   out<<filmact._IDFilm<<","<<filmact._IDActor;
   return out;
 }
