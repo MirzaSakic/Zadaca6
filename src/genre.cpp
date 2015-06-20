@@ -8,12 +8,20 @@ Genre::Genre(const std::string& gen)
   size_t pos;
   std::string id,genname;
 
-  id=gen.substr(0,',');
+
+  if(gen.find(',') == std::string::npos)
+  {
+    _genre_name=gen;
+  }
+  else
+  {
+   id=gen.substr(0,',');
   _ID=stoi(id);
   pos=gen.find(',') + 1;
 
   genname=gen.substr(pos,std::string::npos);
   _genre_name=genname;
+  }
 }
 
 Genre::Genre(const Genre& other) : _ID(other._ID), _genre_name(other._genre_name) {}
