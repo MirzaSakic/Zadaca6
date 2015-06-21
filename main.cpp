@@ -25,8 +25,9 @@ int AddGenre(Genres&);
 bool RentAMovie(UsersMovies&,Films&);
 bool ReturnAMovie(UsersMovies&);
 void SaveChanges(bool*,Users&,Films&,Actors&,Genres&,UsersMovies&,FilmsActors&,FilmsGenres&);
-void RentedMovies(UsersMovies&,Users&);
-void RentHistory(UsersMovies&,Users&);
+void RentedMovies(UsersMovies&,Users&,Films&);
+void RentHistory(UsersMovies&,Users&,Films&);
+void SearchForMovie(Films&,Actors&,Genres&,FilmsActors&,FilmsGenres&);
 
 
 const string file_users="database/users.zad6";
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
 {
   Users users;
   ifstream input(file_users);
+  users.setFilePath(file_users);
   if(!input)
   {
     ofstream out(file_users);
@@ -51,10 +53,19 @@ int main(int argc, char *argv[])
     }
     cout<<"Users data file not found! Empty users.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    users.LoadFromFile();
+    users.AddIndexOnFirstName();
+    users.AddIndexOnLastName();
+    cout<<"Users table loaded!\n";
+  }
   Films movies;
   input.open(file_movies);
+  movies.setFilePath(file_movies);
   if(!input.is_open())
   {
     ofstream out(file_movies);
@@ -65,10 +76,18 @@ int main(int argc, char *argv[])
     }
     cout<<"Movies data file not found! Empty movies.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    movies.LoadFromFile();
+    movies.AddIndexOnTitle();
+    cout<<"Movies table loaded!\n";
+  }
   Actors actors;
   input.open(file_actors);
+  actors.setFilePath(file_actors);
   if(!input.is_open())
   {
     ofstream out(file_actors);
@@ -79,10 +98,19 @@ int main(int argc, char *argv[])
     }
     cout<<"Actors data file not found! Empty actors.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    actors.LoadFromFile();
+    actors.AddIndexOnFirstName();
+    actors.AddIndexOnLastName();
+    cout<<"Actors table loaded!\n";
+  }
   Genres genres;
   input.open(file_genres);
+  genres.setFilePath(file_genres);
   if(!input.is_open())
   {
     ofstream out(file_genres);
@@ -93,10 +121,18 @@ int main(int argc, char *argv[])
     }
     cout<<"Genres data file not found! Empty genres.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    genres.LoadFromFile();
+    genres.AddIndexOnGenre_name();
+    cout<<"Genres table loaded!\n";
+  }
   UsersMovies UserHasMovie;
   input.open(file_users_movies);
+  UserHasMovie.setFilePath(file_users_movies);
   if(!input.is_open())
   {
     ofstream out(file_users_movies);
@@ -107,10 +143,17 @@ int main(int argc, char *argv[])
     }
     cout<<"User-Movies data file not found! Empty user_has_movies.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    UserHasMovie.LoadFromFile();
+    cout<<"UsersMovies table loaded!\n";
+  }
   FilmsActors FilmHasActors;
   input.open(file_movies_actors);
+  FilmHasActors.setFilePath(file_movies_actors);
   if(!input.is_open())
   {
     ofstream out(file_movies_actors);
@@ -121,10 +164,17 @@ int main(int argc, char *argv[])
     }
     cout<<"Movies-Actors data file not found! Empty movies_have_actors.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
+  else
+  {
+    input.close();
+    FilmHasActors.LoadFromFile();
+    cout<<"MoviesActors table loaded!\n";
+  }
   FilmsGenres FilmHasGenres;
   input.open(file_movies_genres);
+  FilmHasGenres.setFilePath(file_movies_genres);
   if(!input.is_open())
   {
     ofstream out(file_movies_genres);
@@ -135,57 +185,16 @@ int main(int argc, char *argv[])
     }
     cout<<"Movies-Genres data file not found! Empty movies_have_genre.zad6 file created"<<endl;
     out.close();
+    input.close();
   }
-  input.close();
-  users.setFilePath(file_users);
-  users.LoadFromFile();
-  cout<<"Users loaded!\n";
-//  users.SetVerbose(true);
- // cout<<users.getElement(temp)<<endl;
-  //temp.ID() = 11;
-  //cout<<users.getElement(temp)<<endl;
-  //users.printTree();
-  users.AddIndexOnFirstName();
-  users.AddIndexOnLastName();
-  //users.RemoveElement(temp);
-  //users.printIndex(0);
-  /*Film pomm("1,2015,The Godfather");
-  int a;
-  cin>>a;*/
-  
-  UserHasMovie.setFilePath(file_users_movies);
-  UserHasMovie.LoadFromFile();
-  cout<<"UserHasMovie loaded\n";
-  
-  movies.setFilePath(file_movies);
-  movies.LoadFromFile();
-  cout<<"Movies loaded\n";
-  movies.AddIndexOnTitle();
-  
-  actors.setFilePath(file_actors);
-  actors.LoadFromFile();
-  cout<<"Actors loaded\n";
-  actors.AddIndexOnFirstName();
-  actors.AddIndexOnLastName();
+  else
+  {
+    input.close();
+    FilmHasGenres.LoadFromFile();
+    cout<<"MoviesGenres table loaded!\n";
+  }
 
-  genres.setFilePath(file_genres);
-  genres.LoadFromFile();
-  cout<<"Genres loaded\n";
-  genres.AddIndexOnGenre_name();
-  
-  FilmHasGenres.setFilePath(file_movies_genres);
-  FilmHasGenres.LoadFromFile();
-  cout<<"FilmHasGenres loaded\n";
-  
-  FilmHasActors.setFilePath(file_movies_actors);
-  FilmHasActors.LoadFromFile();
-  cout<<"FilmHasActors loaded\n";
 
-/*users.printTree();
-  UserHasMovie.printTree();
-  movies.printTree();
-  actors.printTree();
-  genres.printTree();*/
   int choice=-1;
   bool save[7] = {0};
   while(choice)
@@ -259,32 +268,37 @@ int main(int argc, char *argv[])
           break;
         }
       case 6:
-		{
-		  ReturnAMovie(UserHasMovie);
-		  save[4]=true;
-		  break;
-		}
-	  case 7:
-		{
-			RentedMovies(UserHasMovie,users);
-			break;
-		}
-	  case 8:
-		{
-			RentHistory(UserHasMovie,users);
-			break;
-		}
-	  case 9:
-		{
-			SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
-			cout<<"Changes successfully changed."<<endl;
-			break;
-		}
+      {
+        ReturnAMovie(UserHasMovie);
+        save[4]=true;
+        break;
+      }
+      case 7:
+      {
+        RentedMovies(UserHasMovie,users,movies);
+        break;
+      }
+      case 8:
+      {
+        RentHistory(UserHasMovie,users,movies);
+        break;
+      }
+      case 9:
+      {
+        SearchForMovie(movies,actors,genres,FilmHasActors,FilmHasGenres);
+        break;
+      }
+      case 10:
+      {
+        SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
+        cout<<"Changes successfully changed."<<endl;
+        break;
+      }
       default:
-        {
-          cout<<"Wrong choice\n";
-          break;
-        }
+      {
+        cout<<"Wrong choice\n";
+        break;
+      }
     }
   }
   return 0;
@@ -302,7 +316,8 @@ int printMenu()
   cout<<"6 Return a movie"<<endl;
   cout<<"7 Rented movies of user"<<endl;
   cout<<"8 Rent history of user"<<endl;
-  cout<<"9 Save changes"<<endl;
+  cout<<"9 Search for a movie\n";
+  cout<<"10 Save changes"<<endl;
   cout<<"0 End program"<<endl;
   cin>>choice;
   cin.ignore();
@@ -525,7 +540,7 @@ return true;
 }
 
 
-void RentedMovies(UsersMovies& usermovies,Users& users)
+void RentedMovies(UsersMovies& usermovies,Users& users,Films& movies)
 {
   int userID;
   cout<<"Enter the ID of the user: ";
@@ -562,12 +577,14 @@ void RentedMovies(UsersMovies& usermovies,Users& users)
 
   for(int i=0;i<vecp.size();i++)
   {
-    cout<<*vecp[i]<<endl;
+    cout<<endl;
+    cout<<(movies.GetFilm( vecp[i]->IDFilm() ))<<endl;
+    cout<<"Date of Borrowing: "<<vecp[i]->DateOfBorrowing()<<endl<<endl;
   }
 }
 
 
-void RentHistory(UsersMovies& usermovies,Users& users) 
+void RentHistory(UsersMovies& usermovies,Users& users,Films& movies) 
 {
   int userID;
   cout<<"Enter the ID of the user: ";
@@ -604,7 +621,47 @@ void RentHistory(UsersMovies& usermovies,Users& users)
 
   for(int i = 0;i<vecp.size();++i)
   {
-    cout<<*vecp[i]<<endl;
+    cout<<endl;
+    cout<<(movies.GetFilm( vecp[i]->IDFilm() ))<<endl;
+    cout<<"Date of Borrowing: "<<(vecp[i]->DateOfBorrowing())<<endl;
+    if(vecp[i]->DateOfReturning() != Date(0,0,0))
+      cout<<"Date of Returning: "<<(vecp[i]->DateOfReturning())<<endl<<endl;
+    else 
+      cout<<"User has not yet returned this movie"<<endl<<endl;
   }
 }
 
+
+void SearchForMovie(Films& films, Actors& actors, Genres& genres, FilmsActors& fa, FilmsGenres& fg)
+{
+  cout<<"Enter movies name: ";
+  string searchq;
+  getline(cin, searchq);
+  sp::vector<Film*> found = films.GetFilmsByTitle(searchq);
+  if(!found.size())
+  {
+    cout<<"\n\nNo results\n\n";
+  }
+  else
+  {
+    cout<<"\n\nSearch results:\n\n";
+    for(auto i=0;i<found.size();++i)
+    {
+      cout<<*found[i]<<endl<<endl;
+      cout<<"Actors:\n";
+      sp::vector<FilmActor*> mvac = fa.GetRecordsForFilm(found[i]->ID());
+      for(auto j=0;j<mvac.size();++j)
+      {
+        cout<<actors.GetActor(mvac[j]->IDActor())<<endl;
+      }
+      sp::vector<FilmGenre*> mvge = fg.GetGenresOfFilm(found[i]->ID());
+      cout<<"Genre ";
+      auto j=0;
+      for(j=0;j<mvge.size()-1;++j)
+      {
+        cout<<genres.GetGenre(mvge[j]->IDGenre()).genre_name()<<"/";
+      }
+      cout<<genres.GetGenre(mvge[j]->IDGenre()).genre_name()<<endl;
+    }
+  }
+}
