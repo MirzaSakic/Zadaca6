@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
       case 10:
       {
         SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
-        cout<<"Changes successfully changed."<<endl;
+        cout<<"Changes successfully saved."<<endl;
         break;
       }
       default:
