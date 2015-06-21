@@ -12,18 +12,22 @@ Film::Film(const std::string& film)
   int pos = 0;
   std::string copy = film;
   std::string id,rel_year,title;
+  //std::cout<<"Original string: "<<copy<<std::endl;
   
   pos=copy.find(separator);
   id =copy.substr(0,pos);
+  //std::cout<<"ID: "<<id<<"\n";
   _ID=stoi(id);
   copy.erase(0,pos+1);
 
   rel_year=copy.substr(0,separator);
+  //std::cout<<"Year: "<<rel_year<<"\n";
   int year = stoi(rel_year);
   _release_year=year;
 
   pos=copy.find(separator) + 1;
   title = copy.substr(pos,std::string::npos);
+  //std::cout<<"Title: "<<title<<"\n";
   _title = title;
 }
 
@@ -52,7 +56,7 @@ std::ostream& operator << (std::ostream& out,const Film& film)
   out<<film._ID<<" "<<film._title<<" "<<film._release_year;
   return out;
   }
-  out<<film._ID<<","<<film._title<<","<<film._release_year;
+  out<<film._ID<<","<<film._release_year<<","<<film._title;
   return out;
 }
 

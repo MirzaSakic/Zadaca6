@@ -149,7 +149,9 @@ int main(int argc, char *argv[])
   users.AddIndexOnLastName();
   //users.RemoveElement(temp);
   //users.printIndex(0);
-  Film pomm("1,The Godfather,2015");
+  /*Film pomm("1,2015,The Godfather");
+  int a;
+  cin>>a;*/
   
   UserHasMovie.setFilePath(file_users_movies);
   UserHasMovie.LoadFromFile();
@@ -185,29 +187,36 @@ int main(int argc, char *argv[])
   actors.printTree();
   genres.printTree();*/
   int choice=-1;
-  bool save[7];
+  bool save[7] = {0};
   while(choice)
   {
     choice = printMenu();
     switch(choice)
     {
       case 0:
-		{
-		char temp;
-		cout<<"Do you want to save changes: (y/n) ";
-		cin>>temp;
-		cin.ignore();
-		if(temp=='y')
-		{
-		  SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
-		  cout<<"Changes successfully changed."<<endl;
-		}
+		  {
+		    char temp;
+        for(auto i=0;i<7;++i)
+        {
+          if(save[i])
+          {
+            cout<<"Do you want to save changes? (Y/N): ";
+            cin>>temp;
+            cin.ignore();
+            if(temp=='Y'||temp=='y')
+            {
+              SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
+              cout<<"Changes successfully saved."<<endl;
+            }
+            return 0;
+          }
+        }
         break;
-		}
+		  }
       case 1:
         {
           cout<<"New users ID: "<<AddUser(users)<<endl;
-          users.printTree();
+          //users.printTree();
           save[0]=true;
           break;
         }
@@ -215,13 +224,13 @@ int main(int argc, char *argv[])
         {
           cout<<"New movies ID: "<<AddMovie(movies, actors, genres, FilmHasActors, FilmHasGenres)<<endl;
           save[1]=true;
-		  save[2]=true;
-		  save[6]=true;
-		  save[3]=true;
-		  save[5]=true;
-		  FilmHasGenres.printTree();
-		  
-		  break;
+          save[2]=true;
+          save[6]=true;
+          save[3]=true;
+          save[5]=true;
+          FilmHasGenres.printTree();
+          
+          break;
         }
       case 3:
         {
@@ -413,8 +422,8 @@ int AddMovie(Films& movies, Actors& actors, Genres& genres, FilmsActors& filmact
     }
     else
     {
-      FilmActor tempInter(movie.ID(), found[0]->ID());
-      filmactors.AddElement(tempInter);
+      FilmGenre tempInter(movie.ID(), found[0]->ID());
+      filmsgenres.AddElement(tempInter);
     }
   } 
   return movie.ID();
@@ -447,7 +456,7 @@ bool ReturnAMovie(UsersMovies& usermovies)
 	}
 	catch(invalid_argument err)
 	{
-	cout<<err.what()<<endl;
+	  cout<<"User never borrowed movie with id "<<IDMovie<<endl;
 	}
 	return false;
 }

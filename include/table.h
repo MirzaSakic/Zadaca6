@@ -82,7 +82,7 @@ void Table<T>::LoadFromFile()
   while(1)
   {
     getline(input, line);
-    std::cout<<line<<std::endl;
+    //std::cout<<line<<std::endl;
     if((!input) || line == "\n") break;
     T temp(line);
     if(temp.ID()>max)

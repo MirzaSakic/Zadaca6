@@ -98,9 +98,9 @@ const sp::vector<const FilmBorrowed*> UsersMovies::GetBorrowedRecords(int IDUser
 sp::vector<FilmBorrowed*> UsersMovies::GetRecordsForUser(int IDUser)
 {
   FilmBorrowed temp(IDUser, 0, Date(0,0,0));
-  cout<<"aab\n";
+  //cout<<"aab\n";
   vector<FilmBorrowed*> Records = _data.getAll<FilmBorrowed*>(temp);
-  cout<<"aac\n";
+  //cout<<"aac\n";
   return move(Records);
 }
 
@@ -136,7 +136,7 @@ const sp::vector<const FilmBorrowed*> UsersMovies::GetRecordsForMovie(int IDMovi
 
 sp::vector<FilmBorrowed*> UsersMovies::GetBorrowedRecordsForUser(int IDUser)
 {
-  cout<<"aa\n";
+  //cout<<"aa\n";
   vector<FilmBorrowed*> all = GetRecordsForUser(IDUser);
   vector<FilmBorrowed*> res;
   for(auto i=0;i<all.size();++i)
@@ -196,7 +196,7 @@ void UsersMovies::LoadFromFile()
   {
     getline(input,line);
     if((!input) || line[0] == '\n') break;
-    cout<<line<<endl;
+    //cout<<line<<endl;
     FilmBorrowed temp(line);
     values.push(temp);
   }
