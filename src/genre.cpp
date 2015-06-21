@@ -5,22 +5,25 @@ Genre::Genre(int ID,const std::string& genName) : _ID(ID), _genre_name(genName) 
 Genre::Genre(int ID) : _ID(ID) {}
 Genre::Genre(const std::string& gen) 
 {
-  size_t pos;
-  std::string id,genname;
+  char separator = ',';
+  if (gen.find(',') == std::string::npos)
+    separator = '/';
 
-
-  if(gen.find(',') == std::string::npos)
+  if(gen.find(',')==std::string::npos && gen.find('/')==std::string::npos)
   {
     _genre_name=gen;
+    return;
   }
   else
   {
-   id=gen.substr(0,',');
-  _ID=stoi(id);
-  pos=gen.find(',') + 1;
+    int pos;
+    std::string id,genname; 
+    id=gen.substr(0,separator);
+    _ID=stoi(id);
+    pos=gen.find(separator) + 1;
 
-  genname=gen.substr(pos,std::string::npos);
-  _genre_name=genname;
+    genname=gen.substr(pos,std::string::npos);
+    _genre_name=genname;
   }
 }
 
@@ -30,12 +33,12 @@ const int& Genre::ID () const {return _ID;}
 const std::string& Genre::genre_name () const {return _genre_name;}
 
 
-bool Genre::operator == (const Genre& other) const {return (_genre_name == other._genre_name);}
-bool Genre::operator != (const Genre& other) const {return (_genre_name != other._genre_name);}
-bool Genre::operator <  (const Genre& other) const {return (_genre_name <  other._genre_name);}
-bool Genre::operator >  (const Genre& other) const {return (_genre_name >  other._genre_name);}
-bool Genre::operator <= (const Genre& other) const {return (_genre_name <= other._genre_name);}
-bool Genre::operator >= (const Genre& other) const {return (_genre_name >= other._genre_name);}
+bool Genre::operator == (const Genre& other) const {return (_ID == other._ID);}
+bool Genre::operator != (const Genre& other) const {return (_ID != other._ID);}
+bool Genre::operator <  (const Genre& other) const {return (_ID <  other._ID);}
+bool Genre::operator >  (const Genre& other) const {return (_ID >  other._ID);}
+bool Genre::operator <= (const Genre& other) const {return (_ID <= other._ID);}
+bool Genre::operator >= (const Genre& other) const {return (_ID >= other._ID);}
 
 
 std::ostream& operator << (std::ostream& out,const Genre& genre)
@@ -47,12 +50,5 @@ std::ostream& operator << (std::ostream& out,const Genre& genre)
   }
   out<<genre._ID<<","<<genre._genre_name;
   return out;
-}
-
-std::istream& operator >> (std::istream& in,Genre& genre)
-{
-  std::cout<<"Name of the genre: ";
-  in>>genre._genre_name;
-  return in ;
 }
 

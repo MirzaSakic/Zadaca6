@@ -6,25 +6,26 @@ Film::Film(int year,const std::string& title) :  _release_year(year), _title(tit
 Film::Film(int ID) : _ID(ID) {};
 Film::Film(const std::string& film) 
 {
-  size_t pos = 0;
+  char separator = ',';
+  if (film.find(',') == std::string::npos)
+      separator='/';
+  int pos = 0;
   std::string copy = film;
   std::string id,rel_year,title;
   
-  pos=copy.find(',');
+  pos=copy.find(separator);
   id =copy.substr(0,pos);
   _ID=stoi(id);
   copy.erase(0,pos+1);
 
-  rel_year=copy.substr(0,',');
+  rel_year=copy.substr(0,separator);
   int year = stoi(rel_year);
   _release_year=year;
 
-  pos=copy.find(',') + 1;
+  pos=copy.find(separator) + 1;
   title = copy.substr(pos,std::string::npos);
   _title = title;
 }
-
-
 
 
 int& Film::ID() {return _ID;}
@@ -48,18 +49,10 @@ std::ostream& operator << (std::ostream& out,const Film& film)
 {
   if(out==std::cout)
   {
-  out<<film._ID<<" "<<film._title<<" "<<film._release_year<<std::endl;
+  out<<film._ID<<" "<<film._title<<" "<<film._release_year;
   return out;
   }
   out<<film._ID<<","<<film._title<<","<<film._release_year;
   return out;
 }
 
-std::istream& operator >> (std::istream& in,Film& film)
-{
-  std::cout<<"Release year: ";
-  in>>film._release_year;
-  std::cout<<"Film title: ";
-  in>>film._title;
-  return in;
-}

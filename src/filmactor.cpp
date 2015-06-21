@@ -8,12 +8,16 @@ FilmActor::FilmActor(int IDFilm,int IDActor) : _IDFilm(IDFilm), _IDActor(IDActor
 
 FilmActor::FilmActor(const string& filmactor) 
 {
-  size_t pos=0;
+  int pos=0;
+  char separator =',';
+  if(filmactor.find(',') == std::string::npos)
+    separator = '/';
   string idfilm,idactor;
-  idfilm = filmactor.substr(0,',');
+
+  idfilm = filmactor.substr(0,separator);
   _IDFilm = stoi(idfilm);
 
-  pos = filmactor.find(',') + 1;
+  pos = filmactor.find(separator) + 1;
   idactor = filmactor.substr(pos,string::npos);
   _IDActor = stoi(idactor);
 }

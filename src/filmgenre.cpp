@@ -8,12 +8,16 @@ FilmGenre::FilmGenre(int IDFilm,int IDGenre) : _IDFilm(IDFilm), _IDGenre(IDGenre
 
 FilmGenre::FilmGenre(const string& filmgenre) 
 {
-  size_t pos=0;
+  int pos=0;
+  char separator =',';
+  if(filmgenre.find(',') == std::string::npos)
+    separator='/';
   string idfilm,idgenre;
-  idfilm = filmgenre.substr(0,',');
+
+  idfilm = filmgenre.substr(0,separator);
   _IDFilm = stoi(idfilm);
 
-  pos = filmgenre.find(',') + 1;
+  pos = filmgenre.find(separator) + 1;
   idgenre = filmgenre.substr(pos,string::npos);
   _IDGenre = stoi(idgenre);
 }
