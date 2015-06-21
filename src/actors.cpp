@@ -373,6 +373,48 @@ void Actors::AddElement(Actor& actor)
       _indexes[_IndexOnFirstName].get(indice).pointers.push(&act);
     }
   }
+  if(_IndexOnLastName!=-1)
+  {
+    actorsindex indice;
+    indice.key = &(act.FirstName());
+    indice.pointers.push(&act);
+    try
+    {
+      _indexes[_IndexOnLastName].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnLastName].get(indice).pointers.push(&act);
+    }
+  }
+  if(_IndexOnBirthPlace!=-1)
+  {
+    actorsindex indice;
+    indice.key = &(act.FirstName());
+    indice.pointers.push(&act);
+    try
+    {
+      _indexes[_IndexOnBirthPlace].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnBirthPlace].get(indice).pointers.push(&act);
+    }
+  }
+  if(_IndexOnBirthDate!=-1)
+  {
+    actorsindex indice;
+    indice.key = &(act.FirstName());
+    indice.pointers.push(&act);
+    try
+    {
+      _indexes[_IndexOnBirthDate].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnBirthDate].get(indice).pointers.push(&act);
+    }
+  }
 }
 
 void Actors::printIndex(int ind) const

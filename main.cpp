@@ -307,18 +307,18 @@ int main(int argc, char *argv[])
 int printMenu()
 {
   int choice;
-  cout<<"Please choose one of the following options:"<<endl;
-  cout<<"1 Add new user to videostore"<<endl;
-  cout<<"2 Add new movie"<<endl;
-  cout<<"3 Add new actor"<<endl;
-  cout<<"4 Add new genre"<<endl;
-  cout<<"5 Rent a movie"<<endl;
-  cout<<"6 Return a movie"<<endl;
-  cout<<"7 Rented movies of user"<<endl;
-  cout<<"8 Rent history of user"<<endl;
-  cout<<"9 Search for a movie\n";
-  cout<<"10 Save changes"<<endl;
-  cout<<"0 End program"<<endl;
+  cout<<"\nPlease choose one of the following options:"<<endl;
+  cout<<"\t1 Add new user to videostore"<<endl;
+  cout<<"\t2 Add new movie"<<endl;
+  cout<<"\t3 Add new actor"<<endl;
+  cout<<"\t4 Add new genre"<<endl;
+  cout<<"\t5 Rent a movie"<<endl;
+  cout<<"\t6 Return a movie"<<endl;
+  cout<<"\t7 Rented movies of user"<<endl;
+  cout<<"\t8 Rent history of user"<<endl;
+  cout<<"\t9 Search for a movie\n";
+  cout<<"\t10 Save changes"<<endl;
+  cout<<"\t0 End program"<<endl;
   cin>>choice;
   cin.ignore();
   return choice;

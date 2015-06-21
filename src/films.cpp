@@ -282,7 +282,7 @@ void Films::AddElement (Film& film)
   Table<Film>::AddElement(film);
   Film& fm =getElement(film);
   
-  if(_IndexOnTitle == -1)
+  if(_IndexOnTitle != -1)
   {
     filmsindex indice;
     indice.key = &(fm.title());
@@ -296,6 +296,21 @@ void Films::AddElement (Film& film)
       _indexes[_IndexOnTitle].get(indice).pointers.push(&fm);
     }
   }
+  if(_IndexOnReleaseYear!=-1)
+  {
+    filmsindex indice;
+    indice.key = &(fm.title());
+    indice.pointers.push(&fm);
+    try
+    {
+      _indexes[_IndexOnTitle].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnTitle].get(indice).pointers.push(&fm);
+    }
+  }
+
 }
 
 void Films::printIndex(int id) const 

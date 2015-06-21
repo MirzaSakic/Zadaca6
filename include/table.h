@@ -48,7 +48,7 @@ class Table
     }
 
   private:
-    int _IDCounter{0};
+    int _IDCounter{1};
 
   protected:
     template<typename U, typename Z>

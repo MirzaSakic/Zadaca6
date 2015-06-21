@@ -373,6 +373,48 @@ void Users::AddElement(User& user)
       _indexes[_IndexOnFirstName].get(indice).pointers.push(&usr);
     }
   }
+  if(_IndexOnLastName!=-1)
+  {
+    usersindex indice;
+    indice.key = &(usr.FirstName());
+    indice.pointers.push(&usr);
+    try
+    {
+      _indexes[_IndexOnLastName].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnLastName].get(indice).pointers.push(&usr);
+    }
+  }
+  if(_IndexOnAdress!=-1)
+  {
+    usersindex indice;
+    indice.key = &(usr.FirstName());
+    indice.pointers.push(&usr);
+    try
+    {
+      _indexes[_IndexOnAdress].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnAdress].get(indice).pointers.push(&usr);
+    }
+  }
+  if(_IndexOnTelephone!=-1)
+  {
+    usersindex indice;
+    indice.key = &(usr.FirstName());
+    indice.pointers.push(&usr);
+    try
+    {
+      _indexes[_IndexOnTelephone].push(indice);
+    }
+    catch (invalid_argument err)
+    {
+      _indexes[_IndexOnTelephone].get(indice).pointers.push(&usr);
+    }
+  }
 }
 
 void Users::printIndex(int ind) const
