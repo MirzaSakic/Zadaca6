@@ -292,6 +292,7 @@ int main(int argc, char *argv[])
       {
         SaveChanges(save,users,movies,actors,genres,UserHasMovie,FilmHasActors,FilmHasGenres);
         cout<<"Changes successfully saved."<<endl;
+        std::fill(save,save+7,0);
         break;
       }
       default:
